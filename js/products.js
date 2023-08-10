@@ -13,11 +13,19 @@ async function showProducts(){
     productos = await getData();
     for(let i=0; i<productos.length; i++){
         container.innerHTML+=`
-        <div class="tarjeta-producto">
-            <img src="${productos[i].image}">
-            <h2>${productos[i].name} - ${productos[i].currency} ${productos[i].cost}</h2>
-            <p class="descripcion">${productos[i].description}</p>
-            <p class="ventas">${productos[i].soldCount}</p>
+        <div class="list-group-item">
+            <div class="row">
+                <div class="col-3">
+                    <img class="img-thumbnail" src="${productos[i].image}">
+                </div>
+                <div class="col">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h4 class="mb-1">${productos[i].name} - ${productos[i].currency} ${productos[i].cost}</h4>
+                        <p class="ventas">${productos[i].soldCount} ventas</p>
+                    </div>
+                    <p class="mb-1">${productos[i].description}</p>
+                </div>
+            </div>
         </div>
         `
     }
