@@ -10,7 +10,7 @@ function login(){
 
     if((user!=="") && (pass!=="")){
         console.log('hasta aca va bien');
-        location.assign("https://www.mozilla.org");
+        window.location.replace("index.html");
     }
     else{
         alert('Error en nombre de usuario o contraseña');
