@@ -4,12 +4,11 @@ function login(){
     let record = document.getElementById('recordar').checked;
     
     if (record){
-        sessionStorage.setItem('usuario', user);
-        sessionStorage.setItem('password', pass);
+        localStorage.setItem('usuario', user);
+        localStorage.setItem('password', pass);
     }
 
     if((user!=="") && (pass!=="")){
-        console.log('hasta aca va bien');
         window.location.replace("index.html");
     }
     else{
