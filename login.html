@@ -19,9 +19,15 @@
 <body>
   <main class="mt-5">
     <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
-      </div>
+      <img src="img/login.png">
+      <h1>Ingresar</h1>
+      <form>
+        <input id="usuario" type="text" name="user" placeholder="Nombre de usuario" required>
+        <input id="contrasena" type="password" name="pass" placeholder="Contraseña" required>
+        <input id="recordar" name="record" type="checkbox">
+        <label for="recordar">Recordar contraseña</label>
+        <input type="submit" value="submit" onclick="login()">
+      </form>
     </div>
   </main>
   <footer class="text-muted">
