@@ -10,6 +10,7 @@ function login(){
 
     if((user!=="") && (pass!=="")){
         window.location.replace("index.html");
+        localStorage.setItem("loggedIn", "true");
     }
     else{
         alert('Error en nombre de usuario o contraseña');
