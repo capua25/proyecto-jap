@@ -88,6 +88,24 @@ function sortAndShowCategories(sortCriteria, categoriesArray){
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function(e){
+    //chequear login
+    let recordado=false;
+    let usuarioguardado=localStorage.getItem('usuario');
+    let passwordguardada=localStorage.getItem('password');
+    if(usuarioguardado!=null && passwordguardada!=null){
+        recordado=true;
+    }
+    if(!recordado){
+        if(sessionStorage.getItem('usuario')==null && sessionStorage.getItem('password')==null){
+            window.location = "login.html";
+        }
+    }
+   
+    document.getElementById('close-session').addEventListener("click", function(){
+        localStorage.removeItem('usuario');
+        localStorage.removeItem('password');
+    });
+    
     getJSONData(CATEGORIES_URL).then(function(resultObj){
         if (resultObj.status === "ok"){
             currentCategoriesArray = resultObj.data
