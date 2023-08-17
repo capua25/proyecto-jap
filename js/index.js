@@ -5,15 +5,16 @@ document.addEventListener("DOMContentLoaded", function(){
     if(usuarioguardado!=null && passwordguardada!=null){
         recordado=true;
     }
-    
-    let usuario=sessionStorage.getItem('usuario');
-    let password=sessionStorage.getItem('password');
-    console.log(usuario+" "+password);
-    if(usuario==null || password==null){
-        if(!recordado){
-            window.location = "login.html"
+    if(!recordado){
+        if(sessionStorage.getItem('usuario')==null && sessionStorage.getItem('password')==null){
+            window.location = "login.html";
         }
     }
+   
+    document.getElementById('close-session').addEventListener("click", function(){
+        localStorage.removeItem('usuario');
+        localStorage.removeItem('password');
+    });
 
     document.getElementById("autos").addEventListener("click", function() {
         localStorage.setItem("catID", 101);

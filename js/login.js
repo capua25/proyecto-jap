@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function(){
-    let usuario=sessionStorage.getItem('usuario');
-    let password=sessionStorage.getItem('password');
+    let usuario=localStorage.getItem('usuario');
+    let password=localStorage.getItem('password');
     if(usuario!=null && password!=null){
         window.location = "index.html";
     }
