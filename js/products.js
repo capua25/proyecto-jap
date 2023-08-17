@@ -1,27 +1,6 @@
 const URL="https://japceibal.github.io/emercado-api/cats_products/101.json";
 let productos = [];
 
-document.addEventListener('DOMContentLoaded',function(){
-    //chequear login
-    let recordado=false;
-    let usuarioguardado=localStorage.getItem('usuario');
-    let passwordguardada=localStorage.getItem('password');
-    if(usuarioguardado!=null && passwordguardada!=null){
-        recordado=true;
-    }
-    if(!recordado){
-        if(sessionStorage.getItem('usuario')==null && sessionStorage.getItem('password')==null){
-            window.location = "login.html";
-        }
-    }
-   
-    document.getElementById('close-session').addEventListener("click", function(){
-        localStorage.removeItem('usuario');
-        localStorage.removeItem('password');
-    });
-    
-});
-
 async function getData(){
     let response = await fetch(URL);
     let data = await response.json();
@@ -53,3 +32,25 @@ async function showProducts(){
 }
 
 showProducts();
+
+
+document.addEventListener('DOMContentLoaded',function(){
+    //chequear login
+    let recordado=false;
+    let usuarioguardado=localStorage.getItem('usuario');
+    let passwordguardada=localStorage.getItem('password');
+    if(usuarioguardado!=null && passwordguardada!=null){
+        recordado=true;
+    }
+    if(!recordado){
+        if(sessionStorage.getItem('usuario')==null && sessionStorage.getItem('password')==null){
+            window.location = "login.html";
+        }
+    }
+   
+    document.getElementById('close-session').addEventListener("click", function(){
+        localStorage.removeItem('usuario');
+        localStorage.removeItem('password');
+    });
+    
+});
