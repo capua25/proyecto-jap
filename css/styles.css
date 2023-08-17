@@ -196,3 +196,10 @@ a.custom-card:hover {
   height: 250px;
   justify-content: space-around;
 }
+
+@media (max-width: 768px) {
+  .login{
+    padding: 10px 20%;
+    min-width: 500px;
+  }
+}
