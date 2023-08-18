@@ -30,7 +30,6 @@ async function showProducts(){
         `
     }
 }
-
 showProducts();
 
 
