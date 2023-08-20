@@ -18,10 +18,20 @@
 
 <body>
   <main class="mt-5">
-    <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
-      </div>
+    <div class="container text-center">
+      <img src="img/login.png">
+      <h1>Ingresar</h1>
+      <form action="#" onsubmit="login(); return false">
+        <div class="login">
+          <input id="usuario" type="text" name="user" placeholder="Nombre de usuario" required>
+          <input id="contrasena" type="password" name="pass" placeholder="Contraseña" required>
+          <div class="checkbox">
+            <input id="recordar" name="record" type="checkbox">
+            <label for="recordar">Mantener la sesión abierta</label>
+          </div>
+          <input type="submit" value="Ingresar">
+        </div>
+      </form>
     </div>
   </main>
   <footer class="text-muted">
