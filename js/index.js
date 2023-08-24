@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function(){
     let usuarioguardado=localStorage.getItem('usuario');
     let passwordguardada=localStorage.getItem('password');
     if(usuarioguardado!=null && passwordguardada!=null){
+        sessionStorage.setItem('usuario',usuarioguardado);
         recordado=true;
     }
     if(!recordado){
@@ -10,11 +11,14 @@ document.addEventListener("DOMContentLoaded", function(){
             window.location = "login.html";
         }
     }
-   
-    document.getElementById('close-session').addEventListener("click", function(){
-        localStorage.removeItem('usuario');
-        localStorage.removeItem('password');
-    });
+
+    document.getElementById('user').innerHTML=sessionStorage.getItem('usuario');
+
+    //Cerrar sesion
+    //document.getElementById('close-session').addEventListener("click", function(){
+    //    localStorage.removeItem('usuario');
+    //    localStorage.removeItem('password');
+    //});
 
     document.getElementById("autos").addEventListener("click", function() {
         localStorage.setItem("catID", 101);
