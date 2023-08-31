@@ -1,24 +1,18 @@
 let categoria = localStorage.getItem('catID');
 const URL=`https://japceibal.github.io/emercado-api/cats_products/${categoria}.json`;
-let productos = [];
-let lista = [];
 
 async function getData(){
-    let response = await fetch(URL);
-    let data = await response.json();
-    let array = await data.products;
-    return array;
+    const response = await fetch(URL);
+    const data = await response.json();
+    let lista = await data.products;
+    return lista;
 }
-async function datos(){
-    productos = await getData();
-    console.log(productos)
-}
-datos();
 
-function showProducts(){
+async function showProducts(){
     const container = document.getElementById('contenedor-productos');
     container.innerHTML = '';
-    productos.forEach((elemento) => {
+    let lista = await getData();
+    lista.forEach((elemento) => {
         container.innerHTML += `
         <div class="list-group-item">
             <div class="row">
@@ -39,7 +33,6 @@ function showProducts(){
 }
 showProducts();
 
-
 document.addEventListener('DOMContentLoaded',function(){
     //chequear login
     let recordado=false;
@@ -58,5 +51,7 @@ document.addEventListener('DOMContentLoaded',function(){
         localStorage.removeItem('usuario');
         localStorage.removeItem('password');
     });
+
+    showProducts();
     
 });
