@@ -58,6 +58,7 @@ document.addEventListener('DOMContentLoaded',function(){
             window.location = "login.html";
         }
     }
+    document.getElementById('user').innerHTML=sessionStorage.getItem('usuario');
    
     document.getElementById('close-session').addEventListener("click", function(){
         localStorage.removeItem('usuario');
