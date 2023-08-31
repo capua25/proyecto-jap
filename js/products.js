@@ -1,18 +1,31 @@
 let categoria = localStorage.getItem('catID');
 const URL=`https://japceibal.github.io/emercado-api/cats_products/${categoria}.json`;
+let lista = [];
 
 async function getData(){
-    const response = await fetch(URL);
-    const data = await response.json();
-    let lista = await data.products;
-    return lista;
+    let result = [];
+    try{
+        const response = await fetch(URL);
+        const data = await response.json();
+        result = data.products;
+    }catch(error){
+        console.log(error);
+    }
+    return result;
+}
+async function dataList(){
+    try{
+        lista = await getData();
+        showProducts(lista);
+    }catch(error){
+        console.log(error);
+    }
 }
 
-async function showProducts(){
+function showProducts(array){
     const container = document.getElementById('contenedor-productos');
     container.innerHTML = '';
-    let lista = await getData();
-    lista.forEach((elemento) => {
+    array.forEach((elemento) => {
         container.innerHTML += `
         <div class="list-group-item">
             <div class="row">
@@ -31,7 +44,6 @@ async function showProducts(){
         `
     });
 }
-showProducts();
 
 document.addEventListener('DOMContentLoaded',function(){
     //chequear login
@@ -51,7 +63,44 @@ document.addEventListener('DOMContentLoaded',function(){
         localStorage.removeItem('usuario');
         localStorage.removeItem('password');
     });
-
-    showProducts();
-    
 });
+
+document.getElementById('sort$Asc').addEventListener('click', function(){
+    let array = lista;
+    array.sort((a,b) => a.cost>b.cost);
+    showProducts(array);
+});
+document.getElementById('sort$Desc').addEventListener('click', function(){
+    let array = lista;
+    array.sort((a,b) => a.cost<b.cost);
+    showProducts(array);
+});
+document.getElementById('sortByRel').addEventListener('click', function(){
+    let array = lista;
+    array.sort((a,b) => a.soldCount<b.soldCount);
+    showProducts(array);
+});
+document.getElementById('rangeFilterCount').addEventListener('click', function(){
+    let array = lista;
+    let min = document.getElementById('rangeFilterCountMin');
+    let max = document.getElementById('rangeFilterCountMax');
+    if(min.value == 0 && max.value != 0){
+        showProducts(array.filter((element) => element.cost<max.value));
+    }
+    else if(min.value != 0 && max.value == 0){
+        showProducts(array.filter((element) => element.cost>min.value));
+    }
+    else if(min.value == 0 && max.value == 0){
+        showProducts(lista);
+    }
+    else{
+        showProducts(array.filter((element) => element.cost>min.value && element.cost<max.value));
+    }
+});
+document.getElementById('clearRangeFilter').addEventListener('click', function(){
+    document.getElementById('rangeFilterCountMin').value = null;
+    document.getElementById('rangeFilterCountMax').value = null;
+    showProducts(lista);
+});
+
+dataList();
