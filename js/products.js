@@ -45,8 +45,9 @@ function showProducts(array){
     });
 }
 
+
+//chequeo de login----------------------------------
 document.addEventListener('DOMContentLoaded',function(){
-    //chequear login
     let recordado=false;
     let usuarioguardado=localStorage.getItem('usuario');
     let passwordguardada=localStorage.getItem('password');
@@ -65,7 +66,9 @@ document.addEventListener('DOMContentLoaded',function(){
         localStorage.removeItem('password');
     });
 });
+//--------------------------------------------------
 
+//ordenanza de articulos----------------------------
 document.getElementById('sort$Asc').addEventListener('click', function(){
     let array = lista;
     array.sort((a,b) => a.cost>b.cost);
@@ -103,5 +106,6 @@ document.getElementById('clearRangeFilter').addEventListener('click', function()
     document.getElementById('rangeFilterCountMax').value = null;
     showProducts(lista);
 });
+//--------------------------------------------------
 
 dataList();
