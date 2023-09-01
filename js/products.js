@@ -112,8 +112,7 @@ document.getElementById('clearRangeFilter').addEventListener('click', function()
 const buscar = document.getElementById('search');
 buscar.addEventListener('input', function(){
     let array = listaOrigen;
-    
-    showProducts(array);
+    showProducts(array.filter((element) => element.name.toLowerCase().includes(buscar.value.toLowerCase())));
 });
 //--------------------------------------------------
 
