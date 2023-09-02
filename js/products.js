@@ -70,20 +70,24 @@ document.addEventListener('DOMContentLoaded',function(){
 
 //ordenanza de articulos----------------------------
 document.getElementById('sort$Asc').addEventListener('click', function(){
-    let array = listaOrigen;
-    array.sort((a,b) => a.cost>b.cost);
+    let array = listaOrigen.slice();
+    array.sort((a,b) => a.cost - b.cost);
     showProducts(array);
+    console.log("anda");
 });
 document.getElementById('sort$Desc').addEventListener('click', function(){
-    let array = listaOrigen;
-    array.sort((a,b) => a.cost<b.cost);
+    let array = listaOrigen.slice();
+    array.sort((a,b) => b.cost - a.cost);
     showProducts(array);
+    console.log("anda2");
 });
 document.getElementById('sortByRel').addEventListener('click', function(){
-    let array = listaOrigen;
-    array.sort((a,b) => a.soldCount<b.soldCount);
+    let array = listaOrigen.slice();
+    array.sort((a,b) => a.soldCount - b.soldCount);
     showProducts(array);
+    console.log("anda3");
 });
+
 document.getElementById('rangeFilterCount').addEventListener('click', function(){
     let array = listaOrigen;
     let min = document.getElementById('rangeFilterCountMin');
