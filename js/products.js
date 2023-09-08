@@ -27,7 +27,7 @@ function showProducts(array){
     container.innerHTML = '';
     array.forEach((elemento) => {
         container.innerHTML += `
-        <div class="list-group-item">
+        <div class="list-group-item" onclick="setProdID(${elemento.id})">
             <div class="row">
                 <div class="col-3">
                     <img class="img-thumbnail" src="${elemento.image}">
@@ -43,6 +43,11 @@ function showProducts(array){
         </div>
         `
     });
+}
+
+function setProdID(id){
+    localStorage.setItem("ProdID", id);
+    window.location = "product-info.html";
 }
 
 
