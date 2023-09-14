@@ -48,9 +48,20 @@ function showInfo(articulo){
     }
 }
 
-function showComments(){
 
-}
+ function showComments(commentsList){
+     const comentarios = document.getElementById("comentarios");
+    comentarios.innerHTML = '';
+    commentsList.forEach((comentario) => {
+        comentarios.innerHTML += `
+        <div>
+        <p class="h3">Comentarios</p>
+        <p>${comentario.user} ${comentario.dateTime}</p>
+        <p>${comentario.description}</p>
+        </div>`
+    })
+    console.log(comentarios)
+};
 
 getData();
 getComments();
