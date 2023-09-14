@@ -2,6 +2,7 @@ let categoria = localStorage.getItem('catID');
 const URL=`https://japceibal.github.io/emercado-api/cats_products/${categoria}.json`;
 let listaOrigen = [];
 
+//Función asincrónica que obtiene los datos desde el servidor
 async function getData(){
     let result = [];
     try{
@@ -13,6 +14,9 @@ async function getData(){
     }
     return result;
 }
+//Función asincrónica que escribe el array de datos en una variable
+//y ejecuta la función showProducts que no es asincrónica, esto es para
+//evitar errores, ya que espera la respuesta de los datos para luego ejecutar la función no asíncrona.
 async function dataList(){
     try{
         listaOrigen = await getData();
@@ -22,6 +26,7 @@ async function dataList(){
     }
 }
 
+//Muestra los productos añadiendo elementos HTML
 function showProducts(array){
     const container = document.getElementById('contenedor-productos');
     container.innerHTML = '';
@@ -45,6 +50,7 @@ function showProducts(array){
     });
 }
 
+//Guarda el ID del producto seleccionado
 function setProdID(id){
     localStorage.setItem("ProdID", id);
     window.location = "product-info.html";
