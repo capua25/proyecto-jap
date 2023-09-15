@@ -18,37 +18,42 @@ async function getComments(){
 function showInfo(articulo){
     const contenedor = document.getElementById('contenedor');
     contenedor.innerHTML=`
-    <div class=""></div>
-    <div class="row">
-        <p class="h3">${articulo.name}</p>
+    <div class="row p-3">
+        <div class="col"></div>
+        <div class="col-md-auto">
+            <p class="h2">${articulo.name}</p>
+        </div>
+        <div class="col"></div>
     </div>
     <div class="row">
-        <p class="h5">Precio</p>
+        <p class="h5"><strong>Precio</strong></p>
         <p>${articulo.currency} ${articulo.cost}</p>
     </div>
     <div class="row">
-        <p class="h5">Descripción</p>
+        <p class="h5"><strong>Descripción</strong></p>
         <p>${articulo.description}</p>
     </div>
     <div class="row">
-        <p class="h5">Categoría</p>
+        <p class="h5"><strong>Categoría</strong></p>
         <p>${articulo.category}</p>
     </div>
     <div class="row">
-        <p class="h5">Cantidad de vendidos</p>
+        <p class="h5"><strong>Cantidad de vendidos</strong></p>
         <p>${articulo.soldCount}</p>
     </div>
     <div class="row" id="imgs">
-        <p class="h5">Imágenes ilustrativas</p>
-    </div>
-    `;
+        <p class="h5"><strong>Imágenes ilustrativas</strong></p>
+    </div>`;
     const images = document.getElementById('imgs');
     for(let i=0; i<articulo.images.length; i++){
-        images.innerHTML+=`<img class="img-thumbnail" src=${articulo.images[i]}>`
+        images.innerHTML+=`
+        <div class="col">
+            <img class="img-thumbnail" src=${articulo.images[i]}>
+        </div>`;
     }
 }
 
- function showComments(commentsList){
+function showComments(commentsList){
      const comentarios = document.getElementById("comentarios");
     comentarios.innerHTML = '';
     console.log(commentsList)
@@ -98,9 +103,6 @@ function pushComment(){
     showComments(arrComments);
 }
 
-getData();
-getComments();
-
 //chequeo de login----------------------------------
 document.addEventListener('DOMContentLoaded',function(){
     let recordado=false;
@@ -122,3 +124,6 @@ document.addEventListener('DOMContentLoaded',function(){
     });
 });
 //--------------------------------------------------
+
+getData();
+getComments();
