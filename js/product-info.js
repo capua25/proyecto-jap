@@ -62,10 +62,12 @@ function showInfo(articulo){
             }
         };
         comentarios.innerHTML += `
-        <div>
-            <p><strong>${comentario.user}</strong> - ${comentario.dateTime} - ${arr[0]}${arr[1]}${arr[2]}${arr[3]}${arr[4]}
-            </p>
-            <p>${comentario.description}</p>
+        <div class="card mb-3">
+            <div class="card-body">
+                <p><strong>${comentario.user}</strong> - ${comentario.dateTime} - ${arr[0]}${arr[1]}${arr[2]}${arr[3]}${arr[4]}
+                </p>
+                <p>${comentario.description}</p>
+            </div>
         </div>`;
     });
 };
