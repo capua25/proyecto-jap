@@ -84,19 +84,16 @@ document.getElementById('sort$Asc').addEventListener('click', function(){
     let array = listaOrigen.slice();
     array.sort((a,b) => a.cost - b.cost);
     showProducts(array);
-    console.log("anda");
 });
 document.getElementById('sort$Desc').addEventListener('click', function(){
     let array = listaOrigen.slice();
     array.sort((a,b) => b.cost - a.cost);
     showProducts(array);
-    console.log("anda2");
 });
 document.getElementById('sortByRel').addEventListener('click', function(){
     let array = listaOrigen.slice();
-    array.sort((a,b) => a.soldCount - b.soldCount);
+    array.sort((a,b) => b.soldCount - a.soldCount);
     showProducts(array);
-    console.log("anda3");
 });
 
 document.getElementById('rangeFilterCount').addEventListener('click', function(){
@@ -127,7 +124,7 @@ document.getElementById('clearRangeFilter').addEventListener('click', function()
 const buscar = document.getElementById('search');
 buscar.addEventListener('input', function(){
     let array = listaOrigen;
-    showProducts(array.filter((element) => element.name.toLowerCase().includes(buscar.value.toLowerCase())));
+    showProducts(array.filter((element) => element.name.toLowerCase().includes(buscar.value.toLowerCase())||element.description.toLowerCase().includes(buscar.value.toLowerCase())));
 });
 //--------------------------------------------------
 
