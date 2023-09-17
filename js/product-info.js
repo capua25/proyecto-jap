@@ -87,7 +87,7 @@ function pushComment(){
     let puntos = puntuacion.selectedOptions[0].value;
     const usuario = sessionStorage.getItem('usuario');
     const date = new Date();
-    let actual = date.getFullYear()+"-"+(date.getMonth()<10?'0':'')+date.getMonth()+"-"+(date.getDay()<10?'0':'')+date.getDay()+" "+
+    let actual = date.getFullYear()+"-"+((date.getMonth()+1)<10?'0':'')+(date.getMonth()+1)+"-"+(date.getDate()<10?'0':'')+date.getDate()+" "+
     (date.getHours()<10?'0':'')+date.getHours()+":"+(date.getMinutes()<10?'0':'')+date.getMinutes()+":"+(date.getSeconds()<10?'0':'')+date.getSeconds();
 
     let commentObj = {
@@ -97,6 +97,7 @@ function pushComment(){
         user: usuario,
         dateTime: actual,
     };
+
     //Aca iria el fetch con el metodo POST
 
     comentario.value = '';
