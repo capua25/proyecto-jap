@@ -87,7 +87,8 @@ function pushComment(){
     let puntos = puntuacion.selectedOptions[0].value;
     const usuario = sessionStorage.getItem('usuario');
     const date = new Date();
-    let actual = date.getFullYear()+"-"+date.getMonth()+"-"+date.getDay()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+    let actual = date.getFullYear()+"-"+(date.getMonth()<10?'0':'')+date.getMonth()+"-"+(date.getDay()<10?'0':'')+date.getDay()+" "+
+    (date.getHours()<10?'0':'')+date.getHours()+":"+(date.getMinutes()<10?'0':'')+date.getMinutes()+":"+(date.getSeconds()<10?'0':'')+date.getSeconds();
 
     let commentObj = {
         product: ProdID,
