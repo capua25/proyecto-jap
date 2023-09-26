@@ -15,10 +15,12 @@ document.addEventListener("DOMContentLoaded", function(){
     document.getElementById('user').innerHTML=sessionStorage.getItem('usuario');
 
     //Cerrar sesion
-    //document.getElementById('close-session').addEventListener("click", function(){
-    //    localStorage.removeItem('usuario');
-    //    localStorage.removeItem('password');
-    //});
+    document.getElementById('close-session').addEventListener("click", function(){
+        localStorage.removeItem('usuario');
+        localStorage.removeItem('password');
+        sessionStorage.removeItem('usuario');
+        sessionStorage.removeItem('password');
+    });
 
     document.getElementById("autos").addEventListener("click", function() {
         localStorage.setItem("catID", 101);

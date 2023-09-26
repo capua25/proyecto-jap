@@ -105,6 +105,8 @@ document.addEventListener("DOMContentLoaded", function(e){
     document.getElementById('close-session').addEventListener("click", function(){
         localStorage.removeItem('usuario');
         localStorage.removeItem('password');
+        sessionStorage.removeItem('usuario');
+        sessionStorage.removeItem('password');
     });
     
     getJSONData(CATEGORIES_URL).then(function(resultObj){

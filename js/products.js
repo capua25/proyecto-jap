@@ -75,6 +75,8 @@ document.addEventListener('DOMContentLoaded',function(){
     document.getElementById('close-session').addEventListener("click", function(){
         localStorage.removeItem('usuario');
         localStorage.removeItem('password');
+        sessionStorage.removeItem('usuario');
+        sessionStorage.removeItem('password');
     });
 });
 //--------------------------------------------------
