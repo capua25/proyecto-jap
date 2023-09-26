@@ -51,6 +51,11 @@ function showInfo(articulo){
             <img class="img-thumbnail" src=${articulo.images[i]}>
         </div>`;
     }
+    for(let i=0; i<articulo.relatedProducts.length; i++){
+        contenedor3.innerHTML+=`
+        <div class="row">
+        <p>${articulo.relatedProducts[i].name}</p><img class="img-thumbnail" src=${articulo.relatedProducts[i].image}>
+    </div>`};
 }
 
 function showComments(commentsList){
