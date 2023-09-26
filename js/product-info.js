@@ -4,13 +4,13 @@ let arrComments = [];
 async function getData(){
     const response = await fetch(PRODUCT_INFO_URL+ProdID+'.json');
     const data = await response.json();
+    console.log(data);
     showInfo(data);
 }
 
 async function getComments(){
     const response = await fetch(PRODUCT_INFO_COMMENTS_URL+ProdID+'.json');
     const data = await response.json();
-    console.log(data);
     arrComments = data;
     showComments(arrComments);
 }
