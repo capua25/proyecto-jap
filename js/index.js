@@ -35,3 +35,8 @@ document.addEventListener("DOMContentLoaded", function(){
         window.location = "products.html"
     });
 });
+
+document.getElementById('switch').addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+    switchButton.classList.toggle('active');
+});

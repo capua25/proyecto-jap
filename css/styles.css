@@ -203,3 +203,9 @@ a.custom-card:hover {
     min-width: 500px;
   }
 }
+
+.dark {   
+  background:  #333;
+  color:#fff;
+
+}
