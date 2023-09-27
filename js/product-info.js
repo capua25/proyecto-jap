@@ -17,6 +17,7 @@ async function getComments(){
 
 function showInfo(articulo){
     const contenedor = document.getElementById('contenedor');
+    const relacionados = document.getElementById('prod-rel');
     contenedor.innerHTML=`
     <div class="row p-3">
         <div class="col"></div>
@@ -51,11 +52,13 @@ function showInfo(articulo){
             <img class="img-thumbnail" src=${articulo.images[i]}>
         </div>`;
     }
+    relacionados.innerHTML='';
     for(let i=0; i<articulo.relatedProducts.length; i++){
-        contenedor3.innerHTML+=`
-        <div class="row">
-        <p>${articulo.relatedProducts[i].name}</p><img class="img-thumbnail" src=${articulo.relatedProducts[i].image}>
-    </div>`};
+        relacionados.innerHTML+=`
+        <div class="carousel-item card-body">
+            <p class="card-text">${articulo.relatedProducts[i].name}</p><img class="img-thumbnail card-img" src=${articulo.relatedProducts[i].image}>
+        </div>`};
+    relacionados.firstElementChild.setAttribute('class','carousel-item card-body active')
 }
 
 function showComments(commentsList){
