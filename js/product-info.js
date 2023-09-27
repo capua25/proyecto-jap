@@ -56,7 +56,10 @@ function showInfo(articulo){
     for(let i=0; i<articulo.relatedProducts.length; i++){
         relacionados.innerHTML+=`
         <div class="carousel-item card-body">
-            <p class="card-text">${articulo.relatedProducts[i].name}</p><img class="img-thumbnail card-img" src=${articulo.relatedProducts[i].image}>
+            <img class="img-thumbnail card-img" src=${articulo.relatedProducts[i].image}>
+            <div class="carousel-caption d-none d-md-block">
+              <h3>${articulo.relatedProducts[i].name}</h3>
+            </div>
         </div>`};
     relacionados.firstElementChild.setAttribute('class','carousel-item card-body active')
 }
