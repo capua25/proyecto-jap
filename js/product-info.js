@@ -53,15 +53,20 @@ function showInfo(articulo){
         </div>`;
     }
     relacionados.innerHTML='';
-    for(let i=0; i<articulo.relatedProducts.length; i++){
+    const rp = articulo.relatedProducts;
+    for(let i=0; i<rp.length; i++){
         relacionados.innerHTML+=`
         <div class="carousel-item card-body">
-            <img class="img-thumbnail card-img" src=${articulo.relatedProducts[i].image}>
+            <img class="img-thumbnail card-img" src=${rp[i].image}onclick="setProdID(${rp[i].id})">
             <div class="carousel-caption d-none d-md-block">
-              <h3>${articulo.relatedProducts[i].name}</h3>
+              <h3>${rp[i].name}</h3>
             </div>
         </div>`};
     relacionados.firstElementChild.setAttribute('class','carousel-item card-body active')
+}
+function setProdID(id){
+    localStorage.setItem("ProdID", id);
+    window.location = "product-info.html";
 }
 
 function showComments(commentsList){
