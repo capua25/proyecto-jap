@@ -1,3 +1,14 @@
+let m_noche = localStorage.getItem('dm');
+const dm = document.getElementById('switch');
+dm.addEventListener('click', () => {
+    if(m_noche){
+        localStorage.removeItem('dm');
+    }else{
+        localStorage.setItem('dm',true);
+    }
+    darkmode(dm);
+});
+
 //chequeo de login----------------------------------
 document.addEventListener('DOMContentLoaded',function(){
     let recordado=false;
@@ -22,7 +33,22 @@ document.addEventListener('DOMContentLoaded',function(){
 });
 //--------------------------------------------------
 
-document.getElementById('switch').addEventListener('click', () => {
+if(m_noche){darkmode(dm);}
+//Dark Mode---------------
+function darkmode(dm){
+    if(dm.innerHTML=="Modo Día"){
+        dm.innerHTML="Modo Noche"
+    }else{
+        dm.innerHTML="Modo Día"
+    }
     document.body.classList.toggle('dark');
-     switchButton.classList.toggle('active');
- });
+    let lista = document.querySelectorAll('div.card-body');
+    lista.forEach((element) => {
+        element.classList.toggle('dark');
+    });
+    lista = document.querySelectorAll('.dropdown-menu');
+    lista.forEach((element) => {
+        element.classList.toggle('dark-item');
+    });
+ }
+ //------------------------

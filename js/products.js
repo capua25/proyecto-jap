@@ -2,6 +2,17 @@ let categoria = localStorage.getItem('catID');
 const URL=`https://japceibal.github.io/emercado-api/cats_products/${categoria}.json`;
 let listaOrigen = [];
 
+let m_noche = localStorage.getItem('dm');
+const dm = document.getElementById('switch');
+dm.addEventListener('click', () => {
+    if(m_noche){
+        localStorage.removeItem('dm');
+    }else{
+        localStorage.setItem('dm',true);
+    }
+    darkmode(dm);
+});
+
 //Función asincrónica que obtiene los datos desde el servidor
 async function getData(){
     let result = [];
@@ -21,6 +32,7 @@ async function dataList(){
     try{
         listaOrigen = await getData();
         showProducts(listaOrigen);
+        if(m_noche){darkmode(dm);}
     }catch(error){
         console.log(error);
     }
@@ -32,7 +44,7 @@ function showProducts(array){
     container.innerHTML = '';
     array.forEach((elemento) => {
         container.innerHTML += `
-        <div class="list-group-item" onclick="setProdID(${elemento.id})">
+        <div class="list-group-item list-group-item-action cursor-active" onclick="setProdID(${elemento.id})">
             <div class="row">
                 <div class="col-3">
                     <img class="img-thumbnail" src="${elemento.image}">
@@ -132,7 +144,30 @@ buscar.addEventListener('input', function(){
 
 dataList();
 
-document.getElementById('switch').addEventListener('click', () => {
+//Dark Mode---------------
+function darkmode(dm){
+    if(dm.innerHTML=="Modo Día"){
+        dm.innerHTML="Modo Noche"
+    }else{
+        dm.innerHTML="Modo Día"
+    }
     document.body.classList.toggle('dark');
-     switchButton.classList.toggle('active');
- });
+    let lista = document.querySelectorAll('div.list-group-item');
+    lista.forEach((element) => {
+        element.classList.toggle('dark-item');
+    });
+    lista = document.querySelectorAll('label.btn');
+    lista.forEach((element) => {
+        element.classList.toggle('btn-light');
+        element.classList.toggle('btn-dark');
+    });
+    lista = document.querySelectorAll('input');
+    lista.forEach((element) => {
+        element.classList.toggle('dark-item');
+    });
+    lista = document.querySelectorAll('.dropdown-menu');
+    lista.forEach((element) => {
+        element.classList.toggle('dark-item');
+    });
+ }
+ //------------------------

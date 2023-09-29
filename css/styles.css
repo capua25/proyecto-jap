@@ -205,16 +205,16 @@ a.custom-card:hover {
 }
 
 .dark {   
-  background:  #333;
-  color:#fff;
- /*filter: brightness(0.5);*/
+  background-color: #333;
+  color:#eee;
 }
 
-.dark img {
-  filter: brightness(0.8); 
+.dark-item {   
+  background-color: #444;
+  color:#ddd;
 }
 
 .dark table {
   border-color: #fff; 
-  color: #fff;
+  color: #eee;
 }
