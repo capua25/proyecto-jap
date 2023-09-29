@@ -15,13 +15,13 @@ dm.addEventListener('click', () => {
 async function getData() {
     const response = await fetch(PRODUCT_INFO_URL + ProdID + '.json');
     const data = await response.json();
+    console.log(data);
     showInfo(data);
 }
 
 async function getComments() {
     const response = await fetch(PRODUCT_INFO_COMMENTS_URL + ProdID + '.json');
     const data = await response.json();
-    console.log(data);
     arrComments = data;
     showComments(arrComments);
     if(m_noche){darkmode(dm);}
@@ -29,7 +29,8 @@ async function getComments() {
 
 function showInfo(articulo) {
     const contenedor = document.getElementById('contenedor');
-    contenedor.innerHTML = `
+    const relacionados = document.getElementById('prod-rel');
+    contenedor.innerHTML=`
     <div class="row p-3">
         <div class="col"></div>
         <div class="col-md-auto">
@@ -63,6 +64,21 @@ function showInfo(articulo) {
             <img class="img-thumbnail" src=${articulo.images[i]}>
         </div>`;
     }
+    relacionados.innerHTML='';
+    const rp = articulo.relatedProducts;
+    for(let i=0; i<rp.length; i++){
+        relacionados.innerHTML+=`
+        <div class="carousel-item card-body">
+            <img class="img-thumbnail card-img" src=${rp[i].image}onclick="setProdID(${rp[i].id})">
+            <div class="carousel-caption d-none d-md-block">
+              <h3>${rp[i].name}</h3>
+            </div>
+        </div>`};
+    relacionados.firstElementChild.setAttribute('class','carousel-item card-body active')
+}
+function setProdID(id){
+    localStorage.setItem("ProdID", id);
+    window.location = "product-info.html";
 }
 
 function showComments(commentsList) {
