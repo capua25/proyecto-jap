@@ -207,5 +207,14 @@ a.custom-card:hover {
 .dark {   
   background:  #333;
   color:#fff;
+ /*filter: brightness(0.5);*/
 }
 
+.dark img {
+  filter: brightness(0.8); 
+}
+
+.dark table {
+  border-color: #fff; 
+  color: #fff;
+}
