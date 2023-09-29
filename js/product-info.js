@@ -130,3 +130,8 @@ document.addEventListener('DOMContentLoaded',function(){
 
 getData();
 getComments();
+
+document.getElementById('switch').addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+     switchButton.classList.toggle('active');
+ });

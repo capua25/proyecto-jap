@@ -131,3 +131,8 @@ buscar.addEventListener('input', function(){
 //--------------------------------------------------
 
 dataList();
+
+document.getElementById('switch').addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+     switchButton.classList.toggle('active');
+ });
