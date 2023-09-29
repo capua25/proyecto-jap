@@ -4,10 +4,10 @@ let arrComments = [];
 let m_noche = localStorage.getItem('dm');
 const dm = document.getElementById('switch');
 dm.addEventListener('click', () => {
-    if(m_noche){
+    if (m_noche) {
         localStorage.removeItem('dm');
-    }else{
-        localStorage.setItem('dm',true);
+    } else {
+        localStorage.setItem('dm', true);
     }
     darkmode(dm);
 });
@@ -24,13 +24,13 @@ async function getComments() {
     const data = await response.json();
     arrComments = data;
     showComments(arrComments);
-    if(m_noche){darkmode(dm);}
+    if (m_noche) { darkmode(dm); }
 }
 
 function showInfo(articulo) {
     const contenedor = document.getElementById('contenedor');
     const relacionados = document.getElementById('prod-rel');
-    contenedor.innerHTML=`
+    contenedor.innerHTML = `
     <div class="row p-3">
         <div class="col"></div>
         <div class="col-md-auto">
@@ -64,19 +64,19 @@ function showInfo(articulo) {
             <img class="img-thumbnail" src=${articulo.images[i]}>
         </div>`;
     }
-    relacionados.innerHTML='';
+    relacionados.innerHTML = '';
     const rp = articulo.relatedProducts;
-    for(let i=0; i<rp.length; i++){
-        relacionados.innerHTML+=`
+    for (let i = 0; i < rp.length; i++) {
+        relacionados.innerHTML += `
         <div class="carousel-item card-body">
             <img class="img-thumbnail card-img" src=${rp[i].image}onclick="setProdID(${rp[i].id})">
             <div class="carousel-caption d-none d-md-block">
               <h3>${rp[i].name}</h3>
             </div>
         </div>`};
-    relacionados.firstElementChild.setAttribute('class','carousel-item card-body active')
+    relacionados.firstElementChild.setAttribute('class', 'carousel-item card-body active')
 }
-function setProdID(id){
+function setProdID(id) {
     localStorage.setItem("ProdID", id);
     window.location = "product-info.html";
 }

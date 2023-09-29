@@ -1,30 +1,30 @@
 let m_noche = localStorage.getItem('dm');
 const dm = document.getElementById('switch');
 dm.addEventListener('click', () => {
-    if(m_noche){
+    if (m_noche) {
         localStorage.removeItem('dm');
-    }else{
-        localStorage.setItem('dm',true);
+    } else {
+        localStorage.setItem('dm', true);
     }
     darkmode(dm);
 });
 
 //chequeo de login----------------------------------
-document.addEventListener('DOMContentLoaded',function(){
-    let recordado=false;
-    let usuarioguardado=localStorage.getItem('usuario');
-    let passwordguardada=localStorage.getItem('password');
-    if(usuarioguardado!=null && passwordguardada!=null){
-        recordado=true;
+document.addEventListener('DOMContentLoaded', function () {
+    let recordado = false;
+    let usuarioguardado = localStorage.getItem('usuario');
+    let passwordguardada = localStorage.getItem('password');
+    if (usuarioguardado != null && passwordguardada != null) {
+        recordado = true;
     }
-    if(!recordado){
-        if(sessionStorage.getItem('usuario')==null && sessionStorage.getItem('password')==null){
+    if (!recordado) {
+        if (sessionStorage.getItem('usuario') == null && sessionStorage.getItem('password') == null) {
             window.location = "login.html";
         }
     }
-    document.getElementById('user').innerHTML=sessionStorage.getItem('usuario');
-   
-    document.getElementById('close-session').addEventListener("click", function(){
+    document.getElementById('user').innerHTML = sessionStorage.getItem('usuario');
+
+    document.getElementById('close-session').addEventListener("click", function () {
         localStorage.removeItem('usuario');
         localStorage.removeItem('password');
         sessionStorage.removeItem('usuario');
@@ -33,13 +33,13 @@ document.addEventListener('DOMContentLoaded',function(){
 });
 //--------------------------------------------------
 
-if(m_noche){darkmode(dm);}
+if (m_noche) { darkmode(dm); }
 //Dark Mode---------------
-function darkmode(dm){
-    if(dm.innerHTML=="Modo Día"){
-        dm.innerHTML="Modo Noche"
-    }else{
-        dm.innerHTML="Modo Día"
+function darkmode(dm) {
+    if (dm.innerHTML == "Modo Día") {
+        dm.innerHTML = "Modo Noche"
+    } else {
+        dm.innerHTML = "Modo Día"
     }
     document.body.classList.toggle('dark');
     let lista = document.querySelectorAll('div.card-body');
@@ -50,5 +50,5 @@ function darkmode(dm){
     lista.forEach((element) => {
         element.classList.toggle('dark-item');
     });
- }
- //------------------------
+}
+//------------------------
