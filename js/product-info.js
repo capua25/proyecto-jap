@@ -28,6 +28,7 @@ async function getComments() {
 }
 
 function showInfo(articulo) {
+    console.log(articulo);
     const contenedor = document.getElementById('contenedor');
     const relacionados = document.getElementById('prod-rel');
     contenedor.innerHTML = `
@@ -39,23 +40,23 @@ function showInfo(articulo) {
         <div class="col"></div>
     </div>
     <div class="row">
-        <p class="h5"><strong>Precio</strong></p>
+        <p class="h6"><strong>Precio</strong></p>
         <p>${articulo.currency} ${articulo.cost}</p>
     </div>
     <div class="row">
-        <p class="h5"><strong>Descripción</strong></p>
+        <p class="h6"><strong>Descripción</strong></p>
         <p>${articulo.description}</p>
     </div>
     <div class="row">
-        <p class="h5"><strong>Categoría</strong></p>
+        <p class="h6"><strong>Categoría</strong></p>
         <p>${articulo.category}</p>
     </div>
     <div class="row">
-        <p class="h5"><strong>Cantidad de vendidos</strong></p>
+        <p class="h6"><strong>Cantidad de vendidos</strong></p>
         <p>${articulo.soldCount}</p>
     </div>
     <div class="row" id="imgs">
-        <p class="h5"><strong>Imágenes ilustrativas</strong></p>
+        <p class="h6"><strong>Imágenes ilustrativas</strong></p>
     </div>`;
     const images = document.getElementById('imgs');
     for (let i = 0; i < articulo.images.length; i++) {
@@ -69,12 +70,12 @@ function showInfo(articulo) {
     for (let i = 0; i < rp.length; i++) {
         relacionados.innerHTML += `
         <div class="carousel-item card-body">
-            <img class="img-thumbnail card-img" src=${rp[i].image}onclick="setProdID(${rp[i].id})">
+            <img class="img-thumbnail card-img" src=${rp[i].image} onclick="setProdID(${rp[i].id})">
             <div class="carousel-caption d-none d-md-block">
               <h3>${rp[i].name}</h3>
             </div>
         </div>`};
-    relacionados.firstElementChild.setAttribute('class', 'carousel-item card-body active')
+    relacionados.firstElementChild.setAttribute('class', 'carousel-item card-body active');
 }
 function setProdID(id) {
     localStorage.setItem("ProdID", id);
@@ -84,7 +85,6 @@ function setProdID(id) {
 function showComments(commentsList) {
     const comentarios = document.getElementById("comentarios");
     comentarios.innerHTML = '';
-    console.log(commentsList)
     commentsList.forEach((comentario) => {
         let arr = [];
         for (let i = 0; i < 5; i++) {
