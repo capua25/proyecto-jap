@@ -203,3 +203,18 @@ a.custom-card:hover {
     min-width: 500px;
   }
 }
+
+.dark {   
+  background-color: #333;
+  color:#eee;
+}
+
+.dark-item {   
+  background-color: #444;
+  color:#ddd;
+}
+
+.dark table {
+  border-color: #fff; 
+  color: #eee;
+}

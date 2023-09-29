@@ -6,6 +6,17 @@ let currentSortCriteria = undefined;
 let minCount = undefined;
 let maxCount = undefined;
 
+let m_noche = localStorage.getItem('dm');
+const dm = document.getElementById('switch');
+dm.addEventListener('click', () => {
+    if(m_noche){
+        localStorage.removeItem('dm');
+    }else{
+        localStorage.setItem('dm',true);
+    }
+    darkmode(dm);
+});
+
 function sortCategories(criteria, array){
     let result = [];
     if (criteria === ORDER_ASC_BY_NAME)
@@ -68,6 +79,7 @@ function showCategoriesList(){
         }
 
         document.getElementById("cat-list-container").innerHTML = htmlContentToAppend;
+        if(m_noche){darkmode(dm);}
     }
 }
 
@@ -162,3 +174,31 @@ document.addEventListener("DOMContentLoaded", function(e){
         showCategoriesList();
     });
 });
+
+//Dark Mode---------------
+function darkmode(dm){
+    if(dm.innerHTML=="Modo Día"){
+        dm.innerHTML="Modo Noche"
+    }else{
+        dm.innerHTML="Modo Día"
+    }
+    document.body.classList.toggle('dark');
+    let lista = document.querySelectorAll('.list-group-item');
+    lista.forEach((element) => {
+        element.classList.toggle('dark-item');
+    });
+    lista = document.querySelectorAll('label.btn');
+    lista.forEach((element) => {
+        element.classList.toggle('btn-light');
+        element.classList.toggle('btn-dark');
+    });
+    lista = document.querySelectorAll('input');
+    lista.forEach((element) => {
+        element.classList.toggle('dark-item');
+    });
+    lista = document.querySelectorAll('.dropdown-menu');
+    lista.forEach((element) => {
+        element.classList.toggle('dark-item');
+    });
+ }
+ //------------------------
