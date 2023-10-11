@@ -236,3 +236,20 @@ a.custom-card:hover {
   padding: 3px 20%;
   border-radius: 3px;
 }
+
+#forma {
+  color: gray !important;
+}
+
+#carritoCompras {
+  margin-left: auto;
+}
+
+#calleInfo {
+  margin-left: auto !important;
+}
+
+#esquinaInfo {
+  margin-left: auto !important;
+}
+
