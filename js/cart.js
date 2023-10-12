@@ -1,5 +1,6 @@
 let m_noche = localStorage.getItem('dm');
 const dm = document.getElementById('switch');
+
 dm.addEventListener('click', () => {
     if (m_noche) {
         localStorage.removeItem('dm');
@@ -8,6 +9,32 @@ dm.addEventListener('click', () => {
     }
     darkmode(dm);
 });
+
+//fetch
+async function getData() {
+    const response = await fetch(CART_INFO_URL + "25801" + ".json");
+    const data = await response.json();
+    showInfo(data.articles);
+}
+getData();
+//-----
+
+//Mostrar carrito
+function showInfo(array) {
+    const container = document.getElementById("carritoCompras");
+    container.innerHTML = '';
+    array.forEach((element)=>{
+        container.innerHTML += `
+        <tr class="table-primary">
+            <th scope="row"><img src="${element.image}" height="100px" alt=""></th>
+            <td class="text-center">${element.name}</td>
+            <td class="text-center">${element.unitCost}</td>
+            <td><input class="form-outline w-50" type='number' value='1'></td>
+            <td class="fw-bold text-center"></td>
+        </tr>`
+    });
+}
+//---------------
 
 //chequeo de login----------------------------------
 document.addEventListener('DOMContentLoaded', function () {
