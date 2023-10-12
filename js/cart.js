@@ -29,7 +29,7 @@ function showInfo(array) {
             <th scope="row"><img src="${element.image}" height="100px" alt=""></th>
             <td class="text-center">${element.name}</td>
             <td class="text-center">${element.unitCost}</td>
-            <td><input class="form-outline w-50" type='number' value='1'></td>
+            <td><input class="" type='number' value='1'></td>
             <td class="fw-bold text-center"></td>
         </tr>`
     });
