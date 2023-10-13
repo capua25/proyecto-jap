@@ -1,5 +1,6 @@
 let m_noche = localStorage.getItem('dm');
 const dm = document.getElementById('switch');
+let cart = [];
 
 dm.addEventListener('click', () => {
     if (m_noche) {
@@ -14,7 +15,14 @@ dm.addEventListener('click', () => {
 async function getData() {
     const response = await fetch(CART_INFO_URL + "25801" + ".json");
     const data = await response.json();
-    showInfo(data.articles);
+    //provisional hasta que funcione el servidor
+    let localCart = localStorage.getItem('cart');
+    cart = localCart;
+    cart.append(data.articles[0]);
+    console.log(cart)
+    localStorage.setItem('cart', cart);
+    showInfo(cart);
+    //------------------------------------------
 }
 getData();
 //-----
@@ -23,15 +31,27 @@ getData();
 function showInfo(array) {
     const container = document.getElementById("carritoCompras");
     container.innerHTML = '';
-    array.forEach((element)=>{
+    array.forEach((element) => {
         container.innerHTML += `
         <tr class="table-primary">
             <th scope="row"><img src="${element.image}" height="100px" alt=""></th>
             <td class="text-center">${element.name}</td>
-            <td class="text-center">${element.unitCost}</td>
-            <td><input class="" type='number' value='1'></td>
-            <td class="fw-bold text-center"></td>
+            <td class="text-center price">${element.currency}${element.unitCost}</td>
+            <td><input class="subtotal" type='number' value='1' min='1' max='99'></td>
+            <td class="fw-bold text-center">${element.currency}${element.unitCost}</td>
         </tr>`
+    });
+
+    const inputs = document.querySelectorAll('input.subtotal');
+    const subt = document.querySelectorAll('td.fw-bold.text-center');
+    const prices = document.querySelectorAll('td.text-center.price');
+    inputs.forEach((element, i) => {
+        element.addEventListener('input', () => {
+            if (element.value < 0 || element.value > 99) {
+                element.value = 1;
+            }
+            subt[i].innerHTML = 'USD' + (element.value * Number(prices[i].textContent.substring(3)));
+        });
     });
 }
 //---------------

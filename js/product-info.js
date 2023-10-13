@@ -1,5 +1,6 @@
 const ProdID = localStorage.getItem("ProdID");
 let arrComments = [];
+let article = {};
 
 let m_noche = localStorage.getItem('dm');
 const dm = document.getElementById('switch');
@@ -15,7 +16,8 @@ dm.addEventListener('click', () => {
 async function getData() {
     const response = await fetch(PRODUCT_INFO_URL + ProdID + '.json');
     const data = await response.json();
-    console.log(data);
+    article = data;
+    console.log(data)
     showInfo(data);
 }
 
@@ -33,11 +35,14 @@ function showInfo(articulo) {
     const relacionados = document.getElementById('prod-rel');
     contenedor.innerHTML = `
     <div class="row p-3">
-        <div class="col"></div>
         <div class="col-md-auto">
-            <p class="h2">${articulo.name}</p>
+            <p class="text-left h2">${articulo.name}</p>
         </div>
-        <div class="col"></div>
+        <div class="col-md-7">
+        </div>
+        <div class="col-md-auto">
+            <button type="button" class="btn btn-success" onclick=''>Comprar</button>  
+        </div>
     </div>
     <div class="row">
         <p class="h6"><strong>Precio</strong></p>
@@ -76,6 +81,11 @@ function showInfo(articulo) {
             </div>
         </div>`};
     relacionados.firstElementChild.setAttribute('class', 'carousel-item card-body active');
+}
+function cart() {
+    let cart = localStorage.getItem('cart');
+    cart.append(article);
+    localStorage.setItem('cart', cart);
 }
 function setProdID(id) {
     localStorage.setItem("ProdID", id);
