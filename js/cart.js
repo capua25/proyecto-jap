@@ -22,8 +22,6 @@ async function getData() {
         showInfo(cart);
     }else{
         console.log("else");
-        cart = data.articles;
-        localStorage.setItem('cart', cart);
         showInfo(cart);
     }
     //------------------------------------------
