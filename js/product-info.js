@@ -1,6 +1,6 @@
 const ProdID = localStorage.getItem("ProdID");
 let arrComments = [];
-let article = {};
+let article = 0;
 
 let m_noche = localStorage.getItem('dm');
 const dm = document.getElementById('switch');
@@ -16,8 +16,7 @@ dm.addEventListener('click', () => {
 async function getData() {
     const response = await fetch(PRODUCT_INFO_URL + ProdID + '.json');
     const data = await response.json();
-    article = data;
-    console.log(data)
+    article = data.id;
     showInfo(data);
 }
 
@@ -30,7 +29,6 @@ async function getComments() {
 }
 
 function showInfo(articulo) {
-    console.log(articulo);
     const contenedor = document.getElementById('contenedor');
     const relacionados = document.getElementById('prod-rel');
     contenedor.innerHTML = `

@@ -17,11 +17,15 @@ async function getData() {
     const data = await response.json();
     //provisional hasta que funcione el servidor
     let localCart = localStorage.getItem('cart');
-    cart = localCart;
-    cart.append(data.articles[0]);
-    console.log(cart)
-    localStorage.setItem('cart', cart);
-    showInfo(cart);
+    if(localCart!=null){
+        console.log(localCart);
+        showInfo(cart);
+    }else{
+        console.log("else");
+        cart = data.articles;
+        localStorage.setItem('cart', cart);
+        showInfo(cart);
+    }
     //------------------------------------------
 }
 getData();
