@@ -46,15 +46,19 @@ function showProducts(array) {
         container.innerHTML += `
         <div class="list-group-item list-group-item-action cursor-active" onclick="setProdID(${elemento.id})">
             <div class="row">
-                <div class="col-3">
+                <div class="col-3 ">
                     <img class="img-thumbnail" src="${elemento.image}">
                 </div>
                 <div class="col">
                     <div class="d-flex w-100 justify-content-between">
-                        <h4 class="mb-1">${elemento.name} - ${elemento.currency} ${elemento.cost}</h4>
-                        <p class="ventas">${elemento.soldCount} ventas</p>
+                        <p class="mb-1 col-sm-5 col-md-5 col-lg-6 fs-4  fw-bold text-justify">${elemento.name} </p>
+                        <p  class="mb-1 col-sm-1 col-md-1 col-lg-4 fs-5 fw-bolder"> -  </p>
+                        <p  class="mb-1 col-sm-5 col-md-3 fs-5 fw-semibold"> ${elemento.currency} ${elemento.cost} </p>
                     </div>
-                    <p class="mb-1">${elemento.description}</p>
+                    <p class="mb-1 fs-5">${elemento.description}</p>
+                    <div class="col "> 
+                    <p class="ventas text-end fw-light fst-italic">${elemento.soldCount} ventas</p> 
+                    </div>
                 </div>
             </div>
         </div>
