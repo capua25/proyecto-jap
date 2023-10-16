@@ -1,6 +1,8 @@
 let m_noche = localStorage.getItem('dm');
 const dm = document.getElementById('switch');
 let cart = [];
+let cartLength = 0;
+let count = 0;
 
 dm.addEventListener('click', () => {
     if (m_noche) {
@@ -16,24 +18,48 @@ async function getData() {
     const response = await fetch(CART_INFO_URL + "25801" + ".json");
     const data = await response.json();
     //provisional hasta que funcione el servidor
+    cart.push(data.articles[0]);
     let localCart = localStorage.getItem('cart');
-    if(localCart!=null){
-        console.log(localCart);
-        showInfo(cart);
+    if(localCart!=null&&localCart!=''){
+        const articles = localCart.split(',');
+        cartLength = articles.length;
+        articles.forEach((article)=>{
+            getArticle(PRODUCT_INFO_URL+article+'.json');
+        });
     }else{
-        console.log("else");
         showInfo(cart);
     }
     //------------------------------------------
+    
 }
 getData();
+
+async function getArticle(URL){
+    const res = await fetch(URL);
+    const data = await res.json();
+    let article = {
+        count:1,
+        currency:data.currency,
+        id:data.id,
+        image:data.images[0],
+        name:data.name,
+        unitCost:data.cost
+    }
+    cart.push(article);
+    count++;
+    if(count==cartLength){
+        showInfo(cart);
+    }
+}
 //-----
 
 //Mostrar carrito
 function showInfo(array) {
+    console.log(array);
     const container = document.getElementById("carritoCompras");
     container.innerHTML = '';
     array.forEach((element) => {
+        
         container.innerHTML += `
         <tr class="table-primary">
             <th scope="row"><img src="${element.image}" height="100px" alt=""></th>

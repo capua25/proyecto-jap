@@ -39,7 +39,7 @@ function showInfo(articulo) {
         <div class="col-md-7">
         </div>
         <div class="col-md-auto">
-            <button type="button" class="btn btn-success" onclick=''>Comprar</button>  
+            <button type="button" class="btn btn-success" onclick='cart()'>Comprar</button>  
         </div>
     </div>
     <div class="row">
@@ -82,8 +82,14 @@ function showInfo(articulo) {
 }
 function cart() {
     let cart = localStorage.getItem('cart');
-    cart.append(article);
+    if(cart!=undefined&&cart!=null&&cart!=''){
+        console.log('ejecuta')
+        cart+=','+article;
+    }else{
+        cart=article;
+    }
     localStorage.setItem('cart', cart);
+    window.location = "cart.html";
 }
 function setProdID(id) {
     localStorage.setItem("ProdID", id);
