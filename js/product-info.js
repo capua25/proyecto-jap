@@ -93,11 +93,13 @@ function cart() {
     if(cart!=undefined&&cart!=null&&cart!=''){
         let actualCart = cart.split(';');
         if(actualCart.length>0){
+            let found = false;
             cart = '';
             actualCart.forEach((element)=>{
                 let actual = JSON.parse(element);
                 if(actual.id==object.id){
                     actual.count++;
+                    found = true;
                 }
                 if(cart==''){
                     cart=JSON.stringify(actual);
@@ -105,6 +107,7 @@ function cart() {
                     cart+=';'+JSON.stringify(actual);
                 }
             });
+            if(!found){cart+=';'+JSON.stringify(object);}
         }
     }else{
         cart=JSON.stringify(object);
