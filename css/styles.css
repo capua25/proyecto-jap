@@ -47,6 +47,12 @@ nav a {
     padding-bottom: 6rem;
   }
 }
+@media (max-width: 767px) {
+  .jumbotron {
+    padding-top: 8rem;
+    height: 2rem;
+  }
+}
 
 .jumbotron p:last-child {
   margin-bottom: 0;

@@ -1,6 +1,6 @@
 const ProdID = localStorage.getItem("ProdID");
 let arrComments = [];
-let article = 0;
+let article = {};
 
 let m_noche = localStorage.getItem('dm');
 const dm = document.getElementById('switch');
@@ -16,7 +16,7 @@ dm.addEventListener('click', () => {
 async function getData() {
     const response = await fetch(PRODUCT_INFO_URL + ProdID + '.json');
     const data = await response.json();
-    article = data.id;
+    article = data;
     showInfo(data);
 }
 
@@ -81,12 +81,33 @@ function showInfo(articulo) {
     relacionados.firstElementChild.setAttribute('class', 'carousel-item card-body active');
 }
 function cart() {
+    let object = {
+        count: 1,
+        currency: article.currency,
+        id: article.id,
+        image: article.images[0],
+        name: article.name,
+        unitCost: article.cost
+    }
     let cart = localStorage.getItem('cart');
     if(cart!=undefined&&cart!=null&&cart!=''){
-        console.log('ejecuta')
-        cart+=','+article;
+        let actualCart = cart.split(';');
+        if(actualCart.length>0){
+            cart = '';
+            actualCart.forEach((element)=>{
+                let actual = JSON.parse(element);
+                if(actual.id==object.id){
+                    actual.count++;
+                }
+                if(cart==''){
+                    cart=JSON.stringify(actual);
+                }else{
+                    cart+=';'+JSON.stringify(actual);
+                }
+            });
+        }
     }else{
-        cart=article;
+        cart=JSON.stringify(object);
     }
     localStorage.setItem('cart', cart);
     window.location = "cart.html";
