@@ -54,23 +54,44 @@ function showInfo(array) {
                     <td class="text-center">${element.name}</td>
                     <td class="text-center price">${element.currency}${element.unitCost}</td>
                     <td ><input class="subtotal" type='number' value='${element.count}' min='1' max='99'></td>
-                    <td class="fw-bold text-center">${element.currency}${element.unitCost}</td>
+                    <td class="fw-bold text-center" >${element.currency}${element.unitCost}</td>
                     <td class="text-center" width="50px"><button type="button" class="btn" onclick="removeFromCart(${element.id})"><svg style="color: red" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"> <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" fill="red"></path> <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" fill="red"></path> </svg></button></td>
                 </tr>`
         });
+        const resultSubt = [];
         const inputs = document.querySelectorAll('input.subtotal');
         const subt = document.querySelectorAll('td.fw-bold.text-center');
         const prices = document.querySelectorAll('td.text-center.price');
+        const subtotalProd = document.getElementById('subtotalProd');
         inputs.forEach((element, i) => {
             element.addEventListener('input', () => {
                 if (element.value < 0 || element.value > 99) {
                     element.value = 1;
                 }
-                subt[i].innerHTML = 'USD' + (element.value * Number(prices[i].textContent.substring(3)));
+                const subTotal = element.value * Number(prices[i].textContent.substring(3));
+                subt[i].innerHTML = 'USD' + subTotal;
+                resultSubt[i] = subTotal;
+                console.log(resultSubt);
+
+                actualizarSubtotal(resultSubt);
             });
         });
     }
 }
+
+function actualizarSubtotal(resultSubt){
+    const subtotalProd = document.getElementById('subtotalProd');
+    const subtotalString = resultSubt.join(', ');
+    subtotalProd.innerHTML = '';
+    subtotalProd.innerHTML = `<p class="text-secondary">USD ${subtotalString}</p>`;
+}
+
+
+
+
+
+
+
 //---------------
 
 //eliminar del carrito //ROTO!!!
@@ -94,6 +115,13 @@ function removeFromCart(id) {
     showInfo(cart);
 }
 //--------------------
+
+//Subtotal// intento
+//Subtotal general, costo por cantidad
+//Costo de envío calculado a partir del envío seleccionado por el usuario
+// (5%, 7% o 15%) y siendo un porcentaje del valor anterior (el subtotal)
+//El total a pagar: la suma de los dos valores anteriores
+
 
 //chequeo de login----------------------------------
 document.addEventListener('DOMContentLoaded', function () {
