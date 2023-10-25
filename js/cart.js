@@ -67,9 +67,11 @@ function showInfo(array) {
                     element.value = 1;
                 }
                 subt[i].innerHTML = 'USD' + element.value * Number(prices[i].textContent.substring(3));
+                Subtotal();
             });
         });
     }
+    Subtotal();
 }
 //---------------
 
@@ -79,13 +81,38 @@ function Subtotal(){
     const shipping = document.getElementById('shipping');
     const total = document.getElementById('total');
     const prices = document.querySelectorAll('#carritoCompras .table-primary td.fw-bold.text-center');
+    let totalValue = 0;
+    let shippingValue = 0;
+
+    prices.forEach((element) => {
+        let value = element.innerHTML.substring(3);
+        let currency = element.innerHTML.substring(0, 3);
+
+        if (currency == 'USD') {
+            totalValue += Number(value);
+        }else if (currency == 'UYU') {
+            value = value / 40;
+            totalValue += Number(value);
+        }
+    });
+
+    const shipping1 = document.getElementById('FlexRadioDefault1');
+    const shipping2 = document.getElementById('FlexRadioDefault2');
+    const shipping3 = document.getElementById('FlexRadioDefault3');
+    if(shipping1.checked){
+        shippingValue = totalValue*0.15;
+    }else if(shipping2.checked){
+        shippingValue = totalValue*0.07;
+    }else if(shipping3.checked){
+        shippingValue = totalValue*0.05;
+    }
 
     subtotalProd.innerHTML = '';
-    subtotalProd.innerHTML = `<p class="text-secondary">USD ${subtotalString}</p>`;
+    subtotalProd.innerHTML = `<p class="text-secondary">USD ${totalValue}</p>`;
     shipping.innerHTML = '';
-    shipping.innerHTML = `<p class="text-secondary">USD ${subtotalString}</p>`;
+    shipping.innerHTML = `<p class="text-secondary">USD ${shippingValue}</p>`;
     total.innerHTML = '';
-    total.innerHTML = `<p class="text-secondary">USD ${subtotalString}</p>`;
+    total.innerHTML = `<p class="text-secondary">USD ${totalValue+shippingValue}</p>`;
 }
 //--------------------
 
