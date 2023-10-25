@@ -76,7 +76,7 @@
                 </tr>
               </thead>
               <tbody id="carritoCompras">
-                
+
               </tbody>
             </table>
           </div>
@@ -144,10 +144,10 @@
                   <p class="text-secondary">Costo Unitario del producto por cantidad</p>
                 </div>
                 <div class="col-6 text-end" id="subtotalProd">
-                  
+
                 </div>
               </div>
-           </div>
+            </div>
           </div>
           <div class="card border-secondary">
             <div class="card-body">
@@ -160,7 +160,7 @@
 
                 </div>
               </div>
-           </div>
+            </div>
           </div>
           <div class="card border-secondary">
             <div class="card-body">
@@ -169,13 +169,70 @@
                   <p class="text-secondary fs-5">Total($)</p>
                 </div>
                 <div class="col-6 text-end" id="total">
-                  
+
                 </div>
               </div>
-           </div>
+            </div>
           </div>
         </div>
       </div>
+      <div class="card-header" id="divModal">
+        <p class="fs-4">Forma de pago</p>
+        <span id="payment">No ha seleccionado</span>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#modal">
+          Seleccionar
+        </button>
+        <div class="card-body">
+          <!-- Modal -->
+          <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalTittle" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="modalTittle">Forma de pago</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                  <input type="radio" name="modalCheck" id=""><span class="text-secondary"> Tarjeta de crédito</span>
+                  <hr>
+
+                  <div class="form-group row">
+                    <div class="col-6">
+                      <label id="cardLabel" for="card" class="form-label text-secondary">Número de
+                        tarjeta</label>
+                      <input type="text" class="form-control" id="card">
+                    </div>
+                    <div class="col-4">
+                      <label id="codeLaber" for="code" class="form-label text-secondary">Código de seg.</label>
+                      <input type="text" class="form-control" id="code">
+                    </div>
+                    <div class="col-6 mt-2">
+                      <label id="dateLabel" for="date" class="form-label text-secondary">Vencimiento (MM/AA)</label>
+                      <input type="text" class="form-control mb-3" id="date">
+                    </div>
+                  </div>
+
+                  <input type="radio" name="modalCheck" id=""><span class="text-secondary"> Transferencia
+                    bancaria</span>
+                  <hr>
+
+                  <div class="col-6">
+                    <label id="card" for="cardNumber" class="form-label text-secondary">Número de
+                      cuenta</label>
+                    <input type="text" class="form-control mb-3" id="cardNumber">
+                  </div>
+
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Modal -->
+
+        </div>
   </main>
   <footer class="text-muted">
     <div class="container">
