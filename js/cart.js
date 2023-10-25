@@ -108,15 +108,15 @@ function Subtotal(){
     }
 
     subtotalProd.innerHTML = '';
-    subtotalProd.innerHTML = `<p class="text-secondary">USD ${totalValue}</p>`;
+    subtotalProd.innerHTML = `<p class="text-secondary">USD ${Math.round(totalValue)}</p>`;
     shipping.innerHTML = '';
-    shipping.innerHTML = `<p class="text-secondary">USD ${shippingValue}</p>`;
+    shipping.innerHTML = `<p class="text-secondary">USD ${Math.round(shippingValue)}</p>`;
     total.innerHTML = '';
-    total.innerHTML = `<p class="text-secondary">USD ${totalValue+shippingValue}</p>`;
+    total.innerHTML = `<p class="text-secondary">USD ${Math.round(totalValue+shippingValue)}</p>`;
 }
 //--------------------
 
-//eliminar del carrito //ROTO!!!
+//eliminar del carrito
 function removeFromCart(id) {
     let localCart = "";
     cart.forEach((element, index) => {
