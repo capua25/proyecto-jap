@@ -165,11 +165,9 @@ function removeFromCart(id) {
 }
 //--------------------
 
-//Subtotal// intento
-//Subtotal general, costo por cantidad
-//Costo de envío calculado a partir del envío seleccionado por el usuario
-// (5%, 7% o 15%) y siendo un porcentaje del valor anterior (el subtotal)
-//El total a pagar: la suma de los dos valores anteriores
+//Chequeo de campos
+
+//-----------------
 
 
 //chequeo de login----------------------------------
