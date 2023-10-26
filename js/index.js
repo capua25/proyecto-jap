@@ -1,5 +1,3 @@
-let cart = [];
-localStorage.setItem('cart',cart);
 let m_noche = localStorage.getItem('dm');
 const dm = document.getElementById('switch');
 dm.addEventListener('click', () => {

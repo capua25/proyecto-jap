@@ -27,9 +27,19 @@ async function getData() {
             });
         }
     }
+    let newCart = "";
+    cart.forEach((element, index) => {
+        if(newCart == ""){
+            newCart += JSON.stringify(element);
+        }else{
+            newCart += ";" + JSON.stringify(element);
+        }
+    });
+    console.log(newCart);
+    localStorage.setItem("cart", newCart);
     showInfo(cart);
 }
-if (!localStrg) {
+if (!(localStrg != "[]" && localStrg != "" && localStrg != null && localStrg != undefined)) {
     getData();
 } else {
     let localCart = localStrg.split(';');
@@ -63,8 +73,6 @@ function showInfo(array) {
                     <td ><input class="subtotal" type='number' value='${element.count}' min='1' max='99'></td>
                     <td class="fw-bold text-center" >USD${value}</td>
                     <td class="text-center" width="50px"><button type="button" class="btn" onclick="removeFromCart(${element.id})"><svg style="color: red" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"> <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" fill="red"></path> <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" fill="red"></path> </svg></button></td></tr>`
-
-            
         });
         const inputs = document.querySelectorAll('input.subtotal');
         const subt = document.querySelectorAll('td.fw-bold.text-center');
@@ -75,7 +83,7 @@ function showInfo(array) {
                     element.value = 1;
                 }
                 if (prices[i].textContent.substring(0, 3) == 'UYU') {
-                    subt[i].innerHTML = 'USD' + Math.round(element.value * (Number(prices[i].textContent.substring(3)/40)));
+                    subt[i].innerHTML = 'USD' + Math.round(element.value * (Number(prices[i].textContent.substring(3) / 40)));
                 }
                 else if (prices[i].textContent.substring(0, 3) == 'USD') {
                     subt[i].innerHTML = 'USD' + Math.round(element.value * Number(prices[i].textContent.substring(3)));
@@ -89,7 +97,7 @@ function showInfo(array) {
 //---------------
 
 //Actualiza subtotales
-function Subtotal(){
+function Subtotal() {
     const subtotalProd = document.getElementById('subtotalProd');
     const shipping = document.getElementById('shipping');
     const total = document.getElementById('total');
@@ -103,7 +111,7 @@ function Subtotal(){
 
         if (currency == 'USD') {
             totalValue += Number(value);
-        }else if (currency == 'UYU') {
+        } else if (currency == 'UYU') {
             value = value / 40;
             totalValue += Number(value);
         }
@@ -112,12 +120,12 @@ function Subtotal(){
     const shipping1 = document.getElementById('FlexRadioDefault1');
     const shipping2 = document.getElementById('FlexRadioDefault2');
     const shipping3 = document.getElementById('FlexRadioDefault3');
-    if(shipping1.checked){
-        shippingValue = totalValue*0.15;
-    }else if(shipping2.checked){
-        shippingValue = totalValue*0.07;
-    }else if(shipping3.checked){
-        shippingValue = totalValue*0.05;
+    if (shipping1.checked) {
+        shippingValue = totalValue * 0.15;
+    } else if (shipping2.checked) {
+        shippingValue = totalValue * 0.07;
+    } else if (shipping3.checked) {
+        shippingValue = totalValue * 0.05;
     }
 
     subtotalProd.innerHTML = '';
@@ -125,27 +133,33 @@ function Subtotal(){
     shipping.innerHTML = '';
     shipping.innerHTML = `<p class="text-secondary">USD ${Math.round(shippingValue)}</p>`;
     total.innerHTML = '';
-    total.innerHTML = `<p class="text-secondary">USD ${Math.round(totalValue+shippingValue)}</p>`;
+    total.innerHTML = `<p class="text-secondary">USD ${Math.round(totalValue + shippingValue)}</p>`;
 }
 //--------------------
 
 //eliminar del carrito
 function removeFromCart(id) {
     let localCart = "";
+    let toRemove = 0;
     cart.forEach((element, index) => {
         if (element.id == id) {
-            cart.splice(index, 1)
+            toRemove = index;
+            console.log("borra")
         } else {
-            if(localCart==""){
+            if (localCart == "") {
                 localCart += JSON.stringify(element);
-            }else{
+            } else {
                 localCart += ";" + JSON.stringify(element);
             }
+            console.log("no borra")
         }
     });
+    if(toRemove>0){
+        cart.splice(toRemove, 1)
+    }
     localStorage.removeItem("cart");
     localStorage.setItem("cart", localCart);
-    
+
     console.log(cart);
     showInfo(cart);
 }
