@@ -29,9 +29,9 @@ async function getData() {
     }
     let newCart = "";
     cart.forEach((element, index) => {
-        if(newCart == ""){
+        if (newCart == "") {
             newCart += JSON.stringify(element);
-        }else{
+        } else {
             newCart += ";" + JSON.stringify(element);
         }
     });
@@ -39,7 +39,7 @@ async function getData() {
     localStorage.setItem("cart", newCart);
     showInfo(cart);
 }
-if (!(localStrg != "[]" && localStrg != "" && localStrg != null && localStrg != undefined)) {
+if (!(localStrg != null && localStrg != undefined)) {
     getData();
 } else {
     let localCart = localStrg.split(';');
@@ -70,9 +70,10 @@ function showInfo(array) {
                     <th scope="row"><img src="${element.image}" height="100px" alt=""></th>
                     <td class="text-center">${element.name}</td>
                     <td class="text-center price">${element.currency}${element.unitCost}</td>
-                    <td ><input class="subtotal" type='number' value='${element.count}' min='1' max='99'></td>
+                    <td class=""><input class="subtotal" type='number' value='${element.count}' min='1' max='99'></td>
                     <td class="fw-bold text-center" >USD${value}</td>
-                    <td class="text-center" width="50px"><button type="button" class="btn" onclick="removeFromCart(${element.id})"><svg style="color: red" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"> <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" fill="red"></path> <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" fill="red"></path> </svg></button></td></tr>`
+                    <td class="text-center" width="50px"><button type="button" class="btn" onclick="removeFromCart(${element.id})"><svg style="color: red" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"> <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" fill="red"></path> <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" fill="red"></path> </svg></button></td>
+                </tr>`
         });
         const inputs = document.querySelectorAll('input.subtotal');
         const subt = document.querySelectorAll('td.fw-bold.text-center');
@@ -154,7 +155,7 @@ function removeFromCart(id) {
             console.log("no borra")
         }
     });
-    if(toRemove>0){
+    if (toRemove >= 0) {
         cart.splice(toRemove, 1)
     }
     localStorage.removeItem("cart");
@@ -166,9 +167,151 @@ function removeFromCart(id) {
 //--------------------
 
 //Chequeo de campos
+const buttonValidate = document.getElementById('buttonValidate')
+buttonValidate.addEventListener('click', () => {
+    const shippingData = document.getElementById('datosEnvio');
+    const street = document.getElementById('controlStreet');
+    const number = document.getElementById('number');
+    const corner = document.getElementById('corner');
+    if (street.value == "") {
+        street.classList.add('is-invalid');
+        street.classList.remove('is-valid');
+        street.classList.add('border-danger');
+        street.classList.remove('border-secondary');
+        street.setCustomValidity('Ingrese una calle');
+    } else {
+        street.classList.remove('is-invalid');
+        street.classList.add('is-valid');
+        street.classList.remove('border-danger');
+        street.classList.add('border-secondary');
+        street.setCustomValidity('');
+    }
+    if (number.value == "") {
+        number.classList.add('is-invalid');
+        number.classList.remove('is-valid');
+        number.classList.add('border-danger');
+        number.classList.remove('border-secondary');
+        number.setCustomValidity('Ingrese un numero de puerta');
+    } else {
+        number.classList.remove('is-invalid');
+        number.classList.add('is-valid');
+        number.classList.remove('border-danger');
+        number.classList.add('border-secondary');
+        number.setCustomValidity('');
+    }
+    if (corner.value == "") {
+        corner.classList.add('is-invalid');
+        corner.classList.remove('is-valid');
+        corner.classList.add('border-danger');
+        corner.classList.remove('border-secondary');
+        corner.setCustomValidity('Ingrese una esquina');
+    } else {
+        corner.classList.remove('is-invalid');
+        corner.classList.add('is-valid');
+        corner.classList.remove('border-danger');
+        corner.classList.add('border-secondary');
+        corner.setCustomValidity('');
+    }
 
+    const divModal = document.getElementById("divModal");
+    const paymentSelector = document.getElementById("paymentSelect");
+    const modalCard = document.getElementById("modalCard");
+    const modalBank = document.getElementById("modalBank");
+    const accountNumber = document.getElementById("accountNumber");
+    const card = document.getElementById("card");
+    const code = document.getElementById("code");
+    const date = document.getElementById("date");
+    let checked = [];
+    if (!modalCard.checked && !modalBank.checked) {
+        modalCard.setCustomValidity('Seleccione un metodo de pago');
+        paymentSelector.classList.add('is-invalid');
+        paymentSelector.classList.remove('is-valid');
+    } else {
+        if (!modalCard.checked) {
+            checked = [];
+            if (accountNumber.value == "" || accountNumber.value == undefined || accountNumber.value == null) {
+                accountNumber.setCustomValidity('Ingrese un numero de tarjeta');
+                accountNumber.classList.add('is-invalid');
+                accountNumber.classList.remove('is-valid');
+                paymentSelector.classList.add('is-invalid');
+                paymentSelector.classList.remove('is-valid');
+                checked.push(false);
+            } else {
+                accountNumber.setCustomValidity('');
+                accountNumber.classList.remove('is-invalid');
+                accountNumber.classList.add('is-valid');
+                paymentSelector.classList.remove('is-invalid');
+                paymentSelector.classList.add('is-valid');
+                checked.push(true);
+
+                console.log('valido1')
+            }
+        } else {
+            checked = [];
+            if (card.value == "" || card.value == undefined || card.value == null) {
+                card.setCustomValidity('Ingrese un numero de tarjeta valido');
+                card.classList.add('is-invalid');
+                card.classList.remove('is-valid');
+                paymentSelector.classList.add('is-invalid');
+                paymentSelector.classList.remove('is-valid');
+                checked.push(false);
+            } else {
+                card.setCustomValidity('');
+                card.classList.remove('is-invalid');
+                card.classList.add('is-valid');
+                paymentSelector.classList.remove('is-invalid');
+                paymentSelector.classList.add('is-valid');
+                checked.push(true);
+
+                console.log('valido')
+            }
+            if (code.value == "" || code.value == undefined || code.value == null) {
+                code.setCustomValidity('Ingrese un codigo de seguridad valido');
+                code.classList.add('is-invalid');
+                code.classList.remove('is-valid');
+                paymentSelector.classList.add('is-invalid');
+                paymentSelector.classList.remove('is-valid');
+                checked.push(false);
+            } else {
+                code.setCustomValidity('');
+                code.classList.remove('is-invalid');
+                code.classList.add('is-valid');
+                paymentSelector.classList.remove('is-invalid');
+                paymentSelector.classList.add('is-valid');
+                checked.push(true);
+                
+                console.log('valido')
+            }
+            if (date.value == "" || date.value == undefined || date.value == null) {
+                date.setCustomValidity('Ingrese una fecha de vencimiento valida');
+                date.classList.add('is-invalid');
+                date.classList.remove('is-valid');
+                paymentSelector.classList.add('is-invalid');
+                paymentSelector.classList.remove('is-valid');
+                checked.push(false);
+            } else {
+                date.setCustomValidity('');
+                date.classList.remove('is-invalid');
+                date.classList.add('is-valid');
+                paymentSelector.classList.remove('is-invalid');
+                paymentSelector.classList.add('is-valid');
+                checked.push(true);
+                
+                console.log('valido')
+            }
+        }
+    }
+    if (checked.every(element => element) && checked.length > 0) {
+        paymentSelector.classList.remove('is-invalid');
+        paymentSelector.classList.add('is-valid');
+    } else {
+        paymentSelector.classList.add('is-invalid');
+        paymentSelector.classList.remove('is-valid');
+    }
+    shippingData.classList.add('was-validated');
+    divModal.classList.add('was-validated');
+});
 //-----------------
-
 
 //chequeo de login----------------------------------
 document.addEventListener('DOMContentLoaded', function () {
@@ -213,3 +356,50 @@ function darkmode(dm) {
     });
 }
 //------------------------
+
+// Modal
+(() => {
+    const modalCard = document.getElementById("modalCard");
+    const accountNumber = document.getElementById("accountNumber");
+    const modalBank = document.getElementById("modalBank");
+    const card = document.getElementById("card");
+    const code = document.getElementById("code");
+    const date = document.getElementById("date");
+    const payment = document.getElementById("payment");
+    card.innerHTML = "";
+    code.innerHTML = "";
+    date.innerHTML = "";
+    accountNumber.innerHTML = "";
+    if (modalCard.checked) {
+        payment.innerHTML = "Tarjeta de crédito";
+    }else if (modalBank.checked) {
+        payment.innerHTML = "Transferencia bancaria";
+    }
+
+    modalCard.addEventListener("click", () => {
+        accountNumber.setAttribute("disabled", "")
+        card.removeAttribute("disabled")
+        code.removeAttribute("disabled")
+        date.removeAttribute("disabled")
+        accountNumber.value = "";
+        payment.innerHTML = "Tarjeta de crédito";
+        accountNumber.classList.remove('is-valid');
+        accountNumber.classList.remove('is-invalid');
+    });
+    modalBank.addEventListener("click", () => {
+        accountNumber.removeAttribute("disabled")
+        card.setAttribute("disabled", "")
+        code.setAttribute("disabled", "")
+        date.setAttribute("disabled", "")
+        card.value = "";
+        code.value = "";
+        date.value = "";
+        payment.innerHTML = "Transferencia bancaria";
+        card.classList.remove('is-valid');
+        card.classList.remove('is-invalid');
+        code.classList.remove('is-valid');
+        code.classList.remove('is-invalid');
+        date.classList.remove('is-valid');
+        date.classList.remove('is-invalid');
+    });
+})();
