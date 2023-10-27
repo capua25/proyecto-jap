@@ -169,6 +169,7 @@ function removeFromCart(id) {
 //Chequeo de campos
 const buttonValidate = document.getElementById('buttonValidate')
 buttonValidate.addEventListener('click', () => {
+    let allChecks = [];
     const shippingData = document.getElementById('datosEnvio');
     const street = document.getElementById('controlStreet');
     const number = document.getElementById('number');
@@ -185,6 +186,7 @@ buttonValidate.addEventListener('click', () => {
         street.classList.remove('border-danger');
         street.classList.add('border-secondary');
         street.setCustomValidity('');
+        allChecks.push(true);
     }
     if (number.value == "") {
         number.classList.add('is-invalid');
@@ -198,6 +200,7 @@ buttonValidate.addEventListener('click', () => {
         number.classList.remove('border-danger');
         number.classList.add('border-secondary');
         number.setCustomValidity('');
+        allChecks.push(true);
     }
     if (corner.value == "") {
         corner.classList.add('is-invalid');
@@ -211,6 +214,7 @@ buttonValidate.addEventListener('click', () => {
         corner.classList.remove('border-danger');
         corner.classList.add('border-secondary');
         corner.setCustomValidity('');
+        allChecks.push(true);
     }
 
     const divModal = document.getElementById("divModal");
@@ -243,8 +247,6 @@ buttonValidate.addEventListener('click', () => {
                 paymentSelector.classList.remove('is-invalid');
                 paymentSelector.classList.add('is-valid');
                 checked.push(true);
-
-                console.log('valido1')
             }
         } else {
             checked = [];
@@ -262,8 +264,6 @@ buttonValidate.addEventListener('click', () => {
                 paymentSelector.classList.remove('is-invalid');
                 paymentSelector.classList.add('is-valid');
                 checked.push(true);
-
-                console.log('valido')
             }
             if (code.value == "" || code.value == undefined || code.value == null) {
                 code.setCustomValidity('Ingrese un codigo de seguridad valido');
@@ -279,8 +279,6 @@ buttonValidate.addEventListener('click', () => {
                 paymentSelector.classList.remove('is-invalid');
                 paymentSelector.classList.add('is-valid');
                 checked.push(true);
-                
-                console.log('valido')
             }
             if (date.value == "" || date.value == undefined || date.value == null) {
                 date.setCustomValidity('Ingrese una fecha de vencimiento valida');
@@ -288,7 +286,6 @@ buttonValidate.addEventListener('click', () => {
                 date.classList.remove('is-valid');
                 paymentSelector.classList.add('is-invalid');
                 paymentSelector.classList.remove('is-valid');
-                checked.push(false);
             } else {
                 date.setCustomValidity('');
                 date.classList.remove('is-invalid');
@@ -296,20 +293,22 @@ buttonValidate.addEventListener('click', () => {
                 paymentSelector.classList.remove('is-invalid');
                 paymentSelector.classList.add('is-valid');
                 checked.push(true);
-                
-                console.log('valido')
             }
         }
     }
     if (checked.every(element => element) && checked.length > 0) {
         paymentSelector.classList.remove('is-invalid');
         paymentSelector.classList.add('is-valid');
+        allChecks.push(true);
     } else {
         paymentSelector.classList.add('is-invalid');
         paymentSelector.classList.remove('is-valid');
     }
     shippingData.classList.add('was-validated');
     divModal.classList.add('was-validated');
+    if (allChecks.every(element => element) && allChecks.length > 0) {
+        //enviar datos
+    }
 });
 //-----------------
 
@@ -372,7 +371,7 @@ function darkmode(dm) {
     accountNumber.innerHTML = "";
     if (modalCard.checked) {
         payment.innerHTML = "Tarjeta de crédito";
-    }else if (modalBank.checked) {
+    } else if (modalBank.checked) {
         payment.innerHTML = "Transferencia bancaria";
     }
 
