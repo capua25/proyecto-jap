@@ -180,6 +180,7 @@ buttonValidate.addEventListener('click', () => {
         street.classList.add('border-danger');
         street.classList.remove('border-secondary');
         street.setCustomValidity('Ingrese una calle');
+        allChecks.push(false);
     } else {
         street.classList.remove('is-invalid');
         street.classList.add('is-valid');
@@ -194,6 +195,7 @@ buttonValidate.addEventListener('click', () => {
         number.classList.add('border-danger');
         number.classList.remove('border-secondary');
         number.setCustomValidity('Ingrese un numero de puerta');
+        allChecks.push(false);
     } else {
         number.classList.remove('is-invalid');
         number.classList.add('is-valid');
@@ -208,6 +210,7 @@ buttonValidate.addEventListener('click', () => {
         corner.classList.add('border-danger');
         corner.classList.remove('border-secondary');
         corner.setCustomValidity('Ingrese una esquina');
+        allChecks.push(false);
     } else {
         corner.classList.remove('is-invalid');
         corner.classList.add('is-valid');
@@ -303,14 +306,22 @@ buttonValidate.addEventListener('click', () => {
     } else {
         paymentSelector.classList.add('is-invalid');
         paymentSelector.classList.remove('is-valid');
+        allChecks.push(false);
     }
     shippingData.classList.add('was-validated');
     divModal.classList.add('was-validated');
     if (allChecks.every(element => element) && allChecks.length > 0) {
-        //enviar datos
+        const alert = document.querySelector('.alert');
+        alert.classList.remove('d-none');
     }
 });
 //-----------------
+
+document.getElementById('buttonClose').addEventListener('click', () => {
+    const alert = document.querySelector('.alert');
+    alert.classList.add('d-none');
+    window.location = "index.html";
+});
 
 //chequeo de login----------------------------------
 document.addEventListener('DOMContentLoaded', function () {
