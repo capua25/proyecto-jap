@@ -109,7 +109,6 @@ function Subtotal() {
     prices.forEach((element) => {
         let value = element.innerHTML.substring(3);
         let currency = element.innerHTML.substring(0, 3);
-
         if (currency == 'USD') {
             totalValue += Number(value);
         } else if (currency == 'UYU') {
@@ -145,14 +144,12 @@ function removeFromCart(id) {
     cart.forEach((element, index) => {
         if (element.id == id) {
             toRemove = index;
-            console.log("borra")
         } else {
             if (localCart == "") {
                 localCart += JSON.stringify(element);
             } else {
                 localCart += ";" + JSON.stringify(element);
             }
-            console.log("no borra")
         }
     });
     if (toRemove >= 0) {
@@ -161,7 +158,6 @@ function removeFromCart(id) {
     localStorage.removeItem("cart");
     localStorage.setItem("cart", localCart);
 
-    console.log(cart);
     showInfo(cart);
 }
 //--------------------
