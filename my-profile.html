@@ -60,11 +60,46 @@
     </div>
   </nav>
   <main>
-    <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
-      </div>
+  <div class="container">
+     <div class="row justify-content-center">
+        <p class="fs-1 mt-3">Perfil</p>
+        <hr class="mt-4">
     </div>
+    <form>
+      <div class="row mt-3">
+        <div class="form-group col-md-4">
+          <label for="firstName">Primer nombre</label>
+          <input type="text" class="form-control" id="firstName">
+        </div>
+        <div class="form-group col-md-4">
+          <label for="secondName">Segundo Nombre</label>
+          <input type="text" class="form-control" id="secondName">
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="form-group col-md-4">
+          <label for="firstLastName">Primer apellido</label>
+          <input type="text" class="form-control" id="firsLasttName">
+        </div>
+        <div class="form-group col-md-4">
+          <label for="secondLastName">Segundo apellido</label>
+          <input type="text" class="form-control" id="secondLastName">
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="form-group col-md-4">
+          <label for="email">E-mail</label>
+          <input type="email" class="form-control" id="email">
+        </div>
+        <div class="form-group col-md-4 mb-5">
+          <label for="numero">Teléfono de contacto</label>
+          <input type="number" class="form-control" id="numero">
+        </div>
+      </div>
+    </form>
+    <hr class="mt-5">
+    <button type="button" class="btn btn-primary">Guardar cambios</button>
+  </div>
   </main>
   <footer class="text-muted">
     <div class="container">
