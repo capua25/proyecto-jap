@@ -9,36 +9,14 @@ dm.addEventListener('click', () => {
     darkmode(dm);
 });
 
-//chequeo de login----------------------------------
-document.addEventListener('DOMContentLoaded', function () {
-    let recordado = false;
-    let usuarioguardado = localStorage.getItem('usuario');
-    let passwordguardada = localStorage.getItem('password');
-    if (usuarioguardado != null && passwordguardada != null) {
-        recordado = true;
-    }
-    if (!recordado) {
-        if (sessionStorage.getItem('usuario') == null && sessionStorage.getItem('password') == null) {
-            window.location = "login.html";
-        }
-    }
-    document.getElementById('user').innerHTML = sessionStorage.getItem('usuario');
-    
-    document.getElementById("email").value = sessionStorage.getItem('usuario');
-    document.getElementById("firstName").value = sessionStorage.getItem('firstName');
-    document.getElementById("secondName").value = sessionStorage.getItem('secondName');
-    document.getElementById("firstLastName").value = sessionStorage.getItem('firstLastName');
-    document.getElementById("secondLastName").value = sessionStorage.getItem('secondLastName');
-    document.getElementById("number").value = sessionStorage.getItem('number');
-
-    document.getElementById('close-session').addEventListener("click", function () {
-        localStorage.removeItem('usuario');
-        localStorage.removeItem('password');
-        sessionStorage.removeItem('usuario');
-        sessionStorage.removeItem('password');
-    });
-});
-//--------------------------------------------------
+//------------------------
+document.getElementById("email").value = sessionStorage.getItem('usuario');
+document.getElementById("firstName").value = sessionStorage.getItem('firstName');
+document.getElementById("secondName").value = sessionStorage.getItem('secondName');
+document.getElementById("firstLastName").value = sessionStorage.getItem('firstLastName');
+document.getElementById("secondLastName").value = sessionStorage.getItem('secondLastName');
+document.getElementById("number").value = sessionStorage.getItem('number');
+//------------------------
     
 if (m_noche) { darkmode(dm); }
 //Dark Mode---------------
@@ -131,6 +109,25 @@ submit.addEventListener("click", () => {
     sessionStorage.setItem("email", email.value);
     sessionStorage.setItem("number", number.value);
     sessionStorage.setItem("secondLastName", secondLastName.value);
+});
+//------------------------
+
+//imagen------------------
+const img = document.getElementById("img");
+let imgSrc = sessionStorage.getItem("profile-img");
+if (imgSrc != null) {
+    img.src = imgSrc;
+}
+
+const fileInput = document.getElementById("file");
+fileInput.addEventListener("change", (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.addEventListener("load", (event) => {
+        sessionStorage.setItem("profile-img", event.target.result);
+        img.src = event.target.result;
+    });
 });
 //------------------------
 
