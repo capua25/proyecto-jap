@@ -90,27 +90,27 @@ function cart() {
         unitCost: article.cost
     }
     let cart = localStorage.getItem('cart');
-    if(cart!=undefined&&cart!=null&&cart!=''){
+    if (cart != undefined && cart != null && cart != '') {
         let actualCart = cart.split(';');
-        if(actualCart.length>0){
+        if (actualCart.length > 0) {
             let found = false;
             cart = '';
-            actualCart.forEach((element)=>{
+            actualCart.forEach((element) => {
                 let actual = JSON.parse(element);
-                if(actual.id==object.id){
+                if (actual.id == object.id) {
                     actual.count++;
                     found = true;
                 }
-                if(cart==''){
-                    cart=JSON.stringify(actual);
-                }else{
-                    cart+=';'+JSON.stringify(actual);
+                if (cart == '') {
+                    cart = JSON.stringify(actual);
+                } else {
+                    cart += ';' + JSON.stringify(actual);
                 }
             });
-            if(!found){cart+=';'+JSON.stringify(object);}
+            if (!found) { cart += ';' + JSON.stringify(object); }
         }
-    }else{
-        cart=JSON.stringify(object);
+    } else {
+        cart = JSON.stringify(object);
     }
     localStorage.setItem('cart', cart);
     window.location = "cart.html";
@@ -132,9 +132,10 @@ function showComments(commentsList) {
                 arr.push(`<span class="fa fa-star"></span>`);
             }
         };
+        m_noche = localStorage.getItem('dm');
         comentarios.innerHTML += `
         <div class="card mb-3">
-            <div class="card-body">
+            <div class="card-body ${m_noche?'dark':''}">
                 <p><strong>${comentario.user}</strong> - ${comentario.dateTime} - ${arr[0]}${arr[1]}${arr[2]}${arr[3]}${arr[4]}</p>
                 <p>${comentario.description}</p>
             </div>

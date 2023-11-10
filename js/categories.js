@@ -8,6 +8,7 @@ let maxCount = undefined;
 
 let m_noche = localStorage.getItem('dm');
 const dm = document.getElementById('switch');
+if (m_noche) { darkmode(dm); }
 dm.addEventListener('click', () => {
     if (m_noche) {
         localStorage.removeItem('dm');
@@ -78,7 +79,13 @@ function showCategoriesList() {
         }
 
         document.getElementById("cat-list-container").innerHTML = htmlContentToAppend;
-        if (m_noche) { darkmode(dm); }
+        m_noche = localStorage.getItem('dm');
+        if (m_noche) {
+            let lista = document.querySelectorAll('div.list-group-item');
+            lista.forEach((element) => {
+                element.classList.toggle('dark-item');
+            });
+        }
     }
 }
 

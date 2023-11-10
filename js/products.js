@@ -32,7 +32,6 @@ async function dataList() {
     try {
         listaOrigen = await getData();
         showProducts(listaOrigen);
-        if (m_noche) { darkmode(dm); }
     } catch (error) {
         console.log(error);
     }
@@ -64,6 +63,13 @@ function showProducts(array) {
         </div>
         `
     });
+    m_noche = localStorage.getItem('dm');
+    if (m_noche) {
+        let lista = document.querySelectorAll('div.list-group-item');
+        lista.forEach((element) => {
+            element.classList.toggle('dark-item');
+        });
+    }
 }
 
 //Guarda el ID del producto seleccionado

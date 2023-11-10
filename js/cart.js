@@ -165,7 +165,7 @@ function removeFromCart(id) {
 //Chequeo de campos
 const buttonValidate = document.getElementById('buttonValidate')
 buttonValidate.addEventListener('click', () => {
-    let allChecks = [];
+    let allChecks = true;
     const shippingData = document.getElementById('datosEnvio');
     const street = document.getElementById('controlStreet');
     const number = document.getElementById('number');
@@ -176,14 +176,13 @@ buttonValidate.addEventListener('click', () => {
         street.classList.add('border-danger');
         street.classList.remove('border-secondary');
         street.setCustomValidity('Ingrese una calle');
-        allChecks.push(false);
+        allChecks = false;
     } else {
         street.classList.remove('is-invalid');
         street.classList.add('is-valid');
         street.classList.remove('border-danger');
         street.classList.add('border-secondary');
         street.setCustomValidity('');
-        allChecks.push(true);
     }
     if (number.value == "") {
         number.classList.add('is-invalid');
@@ -191,14 +190,13 @@ buttonValidate.addEventListener('click', () => {
         number.classList.add('border-danger');
         number.classList.remove('border-secondary');
         number.setCustomValidity('Ingrese un numero de puerta');
-        allChecks.push(false);
+        allChecks = false;
     } else {
         number.classList.remove('is-invalid');
         number.classList.add('is-valid');
         number.classList.remove('border-danger');
         number.classList.add('border-secondary');
         number.setCustomValidity('');
-        allChecks.push(true);
     }
     if (corner.value == "") {
         corner.classList.add('is-invalid');
@@ -206,14 +204,13 @@ buttonValidate.addEventListener('click', () => {
         corner.classList.add('border-danger');
         corner.classList.remove('border-secondary');
         corner.setCustomValidity('Ingrese una esquina');
-        allChecks.push(false);
+        allChecks = false;
     } else {
         corner.classList.remove('is-invalid');
         corner.classList.add('is-valid');
         corner.classList.remove('border-danger');
         corner.classList.add('border-secondary');
         corner.setCustomValidity('');
-        allChecks.push(true);
     }
 
     const divModal = document.getElementById("divModal");
@@ -224,45 +221,41 @@ buttonValidate.addEventListener('click', () => {
     const card = document.getElementById("card");
     const code = document.getElementById("code");
     const date = document.getElementById("date");
-    let checked = [];
     if (!modalCard.checked && !modalBank.checked) {
         modalCard.setCustomValidity('Seleccione un metodo de pago');
         paymentSelector.classList.add('is-invalid');
         paymentSelector.classList.remove('is-valid');
+        allChecks = false;
     } else {
         if (!modalCard.checked) {
-            checked = [];
             if (accountNumber.value == "" || accountNumber.value == undefined || accountNumber.value == null) {
                 accountNumber.setCustomValidity('Ingrese un numero de tarjeta');
                 accountNumber.classList.add('is-invalid');
                 accountNumber.classList.remove('is-valid');
                 paymentSelector.classList.add('is-invalid');
                 paymentSelector.classList.remove('is-valid');
-                checked.push(false);
+                allChecks = false;
             } else {
                 accountNumber.setCustomValidity('');
                 accountNumber.classList.remove('is-invalid');
                 accountNumber.classList.add('is-valid');
                 paymentSelector.classList.remove('is-invalid');
                 paymentSelector.classList.add('is-valid');
-                checked.push(true);
             }
         } else {
-            checked = [];
             if (card.value == "" || card.value == undefined || card.value == null) {
                 card.setCustomValidity('Ingrese un numero de tarjeta valido');
                 card.classList.add('is-invalid');
                 card.classList.remove('is-valid');
                 paymentSelector.classList.add('is-invalid');
                 paymentSelector.classList.remove('is-valid');
-                checked.push(false);
+                allChecks = false;
             } else {
                 card.setCustomValidity('');
                 card.classList.remove('is-invalid');
                 card.classList.add('is-valid');
                 paymentSelector.classList.remove('is-invalid');
                 paymentSelector.classList.add('is-valid');
-                checked.push(true);
             }
             if (code.value == "" || code.value == undefined || code.value == null) {
                 code.setCustomValidity('Ingrese un codigo de seguridad valido');
@@ -270,14 +263,13 @@ buttonValidate.addEventListener('click', () => {
                 code.classList.remove('is-valid');
                 paymentSelector.classList.add('is-invalid');
                 paymentSelector.classList.remove('is-valid');
-                checked.push(false);
+                allChecks = false;
             } else {
                 code.setCustomValidity('');
                 code.classList.remove('is-invalid');
                 code.classList.add('is-valid');
                 paymentSelector.classList.remove('is-invalid');
                 paymentSelector.classList.add('is-valid');
-                checked.push(true);
             }
             if (date.value == "" || date.value == undefined || date.value == null) {
                 date.setCustomValidity('Ingrese una fecha de vencimiento valida');
@@ -285,31 +277,27 @@ buttonValidate.addEventListener('click', () => {
                 date.classList.remove('is-valid');
                 paymentSelector.classList.add('is-invalid');
                 paymentSelector.classList.remove('is-valid');
+                allChecks = false;
             } else {
                 date.setCustomValidity('');
                 date.classList.remove('is-invalid');
                 date.classList.add('is-valid');
                 paymentSelector.classList.remove('is-invalid');
                 paymentSelector.classList.add('is-valid');
-                checked.push(true);
             }
         }
     }
-    if (checked.every(element => element) && checked.length > 0) {
+    if (allChecks) {
         paymentSelector.classList.remove('is-invalid');
         paymentSelector.classList.add('is-valid');
-        allChecks.push(true);
+        const alert = document.querySelector('.alert');
+        alert.classList.remove('d-none');
     } else {
         paymentSelector.classList.add('is-invalid');
         paymentSelector.classList.remove('is-valid');
-        allChecks.push(false);
     }
     shippingData.classList.add('was-validated');
     divModal.classList.add('was-validated');
-    if (allChecks.every(element => element) && allChecks.length > 0) {
-        const alert = document.querySelector('.alert');
-        alert.classList.remove('d-none');
-    }
 });
 //-----------------
 
