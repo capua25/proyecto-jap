@@ -22,8 +22,38 @@ const getCatProducts = (req, res) => {
     }
 }
 
+const getProductInfo = (req, res) => {
+    const response = models.getProductInfo(req.params.id);
+    if (response){
+        res.status(200).json(response);
+    }else{
+        res.status(500).json({error: 'Error interno'});
+    }
+}
+
+const getProductComments = (req, res) => {
+    const response = models.getProductComments(req.params.id);
+    if (response){
+        res.status(200).json(response);
+    }else{
+        res.status(500).json({error: 'Error interno'});
+    }
+}
+
+const getCartInfo = (req, res) => {
+    const response = models.getCartInfo(req.params.id);
+    if (response){
+        res.status(200).json(response);
+    }else{
+        res.status(500).json({error: 'Error interno'});
+    }
+}
+
 module.exports = {
     login,
     getCategories,
-    getCatProducts
+    getCatProducts,
+    getProductInfo,
+    getProductComments,
+    getCartInfo
 }
