@@ -4,6 +4,7 @@ const login = (username, password) => {
     const users = fs.readFileSync('data/users.json');
     if (users != null && users != undefined){
         return JSON.parse(users);
+        console.log(users);
     }else{
         const user_id = fs.readFileSync('data/counter.json');
         const counter = JSON.parse(user_id).current_id + 1;
