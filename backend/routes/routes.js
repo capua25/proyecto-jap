@@ -25,7 +25,6 @@ router.use('/user_cart/:id', (req, res, next) => {
             if (err){
                 return res.json({message: 'Token inválido'});
             }else{
-                req.decoded = decoded;
                 next();
             }
         });
