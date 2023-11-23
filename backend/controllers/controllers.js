@@ -2,7 +2,19 @@ const models = require('../models/models.js');
 const jwt = require('jsonwebtoken');
 const KEY = 'secretkeyjapg279sg1';
 
-const login = () => {}
+const login = (req, res) => {
+    const response = models.login(req.body.user, req.body.password);
+    if (response){
+        if (req.body.user != response.user || req.body.password != response.password){
+            res.status(401).json({error: 'Credenciales inválidas', auth: false, token: null});
+        }else{
+            const token = jwt.sign({id: response.id}, KEY);
+            res.status(200).json({auth: true, token});
+        }
+    }else{
+        res.status(500).json({error: 'Usuario no encontrado'});
+    }
+}
 
 const getCategories = (req, res) => {
     const response = models.getCategories();
