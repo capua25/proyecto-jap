@@ -1,66 +1,168 @@
 const fs = require('fs');
+const { get } = require('http');
+const mariadb = require('mariadb');
+const pool = mariadb.createPool({
+    host: "localhost",
+    user: "root",
+    password: "root",
+    database: "ecommerce"
+});
 
-const login = (username, password) => {
-    const users = fs.readFileSync('data/users.json');
-    if (users != null && users != undefined){
-        return JSON.parse(users);
-        console.log(users);
-    }else{
-        const user_id = fs.readFileSync('data/counter.json');
-        const counter = JSON.parse(user_id).current_id + 1;
-        const new_user = { id: counter, user: username, password: password};
-        fs.writeFileSync('data/users.json', JSON.stringify(new_user));
-        return new_user;
+const login = async (username, password) => {
+    let conn;
+    try {
+        conn = await pool.getConnection();
+        const rows = await conn.query("SELECT * FROM users WHERE username = ? AND password = ?", [username, password]);
+        if (rows.length == 0) {
+            const isUser = await conn.query("SELECT * FROM users WHERE username = ?", [username]);
+            if (isUser.length == 0) {
+                const newUser = await conn.query("INSERT INTO users (username, password) VALUES (?, ?)", [username, password]);
+                if (newUser.affectedRows == 1) {
+                    const rows = await conn.query("SELECT * FROM users WHERE username = ? AND password = ?", [username, password]);
+                    if (rows.length == 1) {
+                        return JSON.stringify(rows[0]);
+                    } else {
+                        throw new Error('Error al iniciar sesión');
+                    }
+                } else {
+                    throw new Error('Error al crear el usuario');
+                }
+            } else {
+                throw new Error('Error al iniciar sesión');
+            }
+        } else if (rows.length == 1) {
+            return JSON.stringify(rows[0]);
+        } else {
+            throw new Error('Error al iniciar sesión');
+        }
+    } catch (err) {
+        throw err;
+    } finally {
+        if (conn) conn.release();
     }
 }
 
 const getCategories = () => {
-    const categories = fs.readFileSync('data/cats/cat.json');
-    if (categories != null && categories != undefined){
-        return JSON.parse(categories);
-    }else{
+    try {
+        const response = fs.readFileSync('data/cats/cat.json');
+        if (response != null && response != undefined) {
+            return JSON.parse(response);
+        } else {
+            return null;
+        }
+    } catch (err) {
         return null;
     }
 }
 const getCatProd = (id) => {
-    const categories = fs.readFileSync(`data/cats_products/${id}.json`);
-    if (categories != null && categories != undefined){
-        return JSON.parse(categories);
-    }else{
+    try {
+        const response = fs.readFileSync(`data/cats_products/${id}.json`);
+        if (response != null && response != undefined) {
+            return JSON.parse(response);
+        } else {
+            return null;
+        }
+    } catch (err) {
         return null;
     }
 }
 
 const getProductInfo = (id) => {
-    const categories = fs.readFileSync(`data/products/${id}.json`);
-    if (categories != null && categories != undefined){
-        return JSON.parse(categories);
-    }else{
+    try {
+        const response = fs.readFileSync(`data/products/${id}.json`);
+        if (response != null && response != undefined) {
+            return JSON.parse(response);
+        } else {
+            return null;
+        }
+    } catch (err) {
         return null;
     }
 }
 
 const getProductComments = (id) => {
-    const categories = fs.readFileSync(`data/products_comments/${id}.json`);
-    if (categories != null && categories != undefined){
-        return JSON.parse(categories);
-    }else{
+    try {
+        const response = fs.readFileSync(`data/products_comments/${id}.json`);
+        if (response != null && response != undefined) {
+            return JSON.parse(response);
+        } else {
+            return null;
+        }
+    } catch (err) {
         return null;
     }
 }
 
 const getCartInfo = (id) => {
-    const categories = fs.readFileSync(`data/user_cart/${id}.json`);
-    if (categories != null && categories != undefined){
-        return JSON.parse(categories);
-    }else{
+    try {
+        const response = fs.readFileSync(`data/user_cart/${id}.json`);
+        if (response != null && response != undefined) {
+            return JSON.parse(response);
+        } else {
+            return null;
+        }
+    } catch (err) {
         return null;
     }
 }
 
-const addToCart = (req, res) => {}
+const getCartBuy = () => {
+    try {
+        const response = fs.readFileSync(`data/cart/buy.json`);
+        if (response != null && response != undefined) {
+            return JSON.parse(response);
+        } else {
+            return null;
+        }
+    } catch (err) {
+        return null;
+    }
+}
 
-const removeFromCart = (req, res) => {}
+const addToCart = (id, item) => {
+    try {
+        const response = fs.readFileSync(`data/user_cart/${id}.json`);
+        if (response != null && response != undefined) {
+            const cart = JSON.parse(response);
+            const index = cart.articles.findIndex(item => item.id == item.id);
+            if (index != -1) {
+                cart.articles[index].count += item.count;
+            } else {
+                cart.articles.push(item);
+            }
+            fs.writeFileSync(`data/user_cart/${id}.json`, JSON.stringify(cart));
+            return cart;
+        } else {
+            return null;
+        }
+    } catch (err) {
+        const cart = { user: id, articles: [] };
+        cart.articles.push(item);
+        fs.writeFileSync(`data/user_cart/${id}.json`, JSON.stringify(cart));
+        return cart;
+    }
+}
+
+const removeFromCart = (id, item_id) => {
+    try {
+        const response = fs.readFileSync(`data/user_cart/${id}.json`);
+        if (response != null && response != undefined) {
+            const cart = JSON.parse(response);
+            const index = cart.articles.findIndex(item => item.id == item_id);
+            if (index != -1) {
+                cart.articles.splice(index, 1);
+                fs.writeFileSync(`data/user_cart/${id}.json`, JSON.stringify(cart));
+                return cart;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    } catch (err) {
+        return null;
+    }
+}
 
 module.exports = {
     login,
@@ -69,6 +171,7 @@ module.exports = {
     getProductInfo,
     getProductComments,
     getCartInfo,
+    getCartBuy,
     addToCart,
     removeFromCart
 }

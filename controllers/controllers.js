@@ -2,17 +2,24 @@ const models = require('../models/models.js');
 const jwt = require('jsonwebtoken');
 const KEY = 'secretkeyjapg279sg1';
 
-const login = (req, res) => {
-    const response = models.login(req.body.user, req.body.password);
+const login = async (req, res) => {
+    const log = await models.login(req.body.username, req.body.password);
+    const response = await JSON.parse(log);
+    console.log(response);
     if (response){
-        if (req.body.user != response.user || req.body.password != response.password){
-            res.status(401).json({error: 'Credenciales inválidas', auth: false, token: null});
+        if (req.body.username !== response.username || req.body.password !== response.password){
+            if(req.body.username != response.username){
+                const token = jwt.sign({id: response.id}, KEY);
+                res.status(200).json({user_id: response.id, auth: true, token});
+            }else if(req.body.password != response.password){
+                res.status(401).json({error: 'Contraseña inválida', auth: false, token: null});
+            }
         }else{
             const token = jwt.sign({id: response.id}, KEY);
-            res.status(200).json({auth: true, token});
+            res.status(200).json({user_id: response.id, auth: true, token});
         }
     }else{
-        res.status(500).json({error: 'Usuario no encontrado'});
+        res.status(500).json({error: 'Error del servidor'});
     }
 }
 
@@ -61,11 +68,41 @@ const getCartInfo = (req, res) => {
     }
 }
 
+const getCartBuy = (req, res) => {
+    const response = models.getCartBuy();
+    if (response){
+        res.status(200).json(response);
+    }else{
+        res.status(500).json({error: 'Error interno'});
+    }
+}
+
+const addToCart = (req, res) => {
+    const response = models.addToCart(req.params.id, req.body);
+    if (response){
+        res.status(200).json(response);
+    }else{
+        res.status(500).json({error: 'Error interno'});
+    }
+}
+
+const removeFromCart = (req, res) => {
+    const response = models.removeFromCart(req.params.id, req.body.id);
+    if (response){
+        res.status(200).json(response);
+    }else{
+        res.status(500).json({error: 'Error interno'});
+    }
+}
+
 module.exports = {
     login,
     getCategories,
     getCatProducts,
     getProductInfo,
     getProductComments,
-    getCartInfo
+    getCartInfo,
+    getCartBuy,
+    addToCart,
+    removeFromCart
 }
