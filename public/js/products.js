@@ -74,6 +74,7 @@ function showProducts(array) {
 
 //Guarda el ID del producto seleccionado
 function setProdID(id) {
+    localStorage.removeItem("ProdID", id);
     localStorage.setItem("ProdID", id);
     window.location = "product-info.html";
 }

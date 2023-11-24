@@ -1,33 +1,37 @@
 document.addEventListener("DOMContentLoaded", function(){
     let usuario=localStorage.getItem('usuario');
-    let password=localStorage.getItem('password');
-    if(usuario!=null && password!=null){
+    let token=localStorage.getItem('token');
+    if(usuario!=null && token!=null){
+        sessionStorage.setItem('usuario',usuario);
+        sessionStorage.setItem('token',token);
         window.location = "index.html";
     }
 });
 
-function login(){
+async function login(){
     let user = document.getElementById('usuario').value;
     let pass = document.getElementById('contrasena').value;
     let record = document.getElementById('recordar').checked;
-    
-    sessionStorage.setItem('usuario', user);
-    sessionStorage.setItem('password', pass);
-    if (record){
-        localStorage.setItem('usuario', user);
-        localStorage.setItem('password', pass);
-    }
 
-    if((user!=="") && (pass!=="")){
-        window.location.replace("index.html");
+    const res = await fetch('http://localhost:3000/api/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({username: user, password: pass})
+    });
+    const data = await res.json();
+    if (data.auth){
+        sessionStorage.setItem('token', data.token);
+        sessionStorage.setItem('usuario', user);
+        sessionStorage.setItem('user_id', data.user_id);
+        if (record){
+            localStorage.setItem('usuario', user);
+            sessionStorage.setItem('token', data.token);
+            localStorage.setItem('user_id', data.user_id);
+        }
+        window.location = "index.html";
+    }else{
+        alert('Error al iniciar sesión');
     }
-    else{
-        alert('Error en nombre de usuario o contraseña');
-    }
-    
 }
-
-document.getElementById('switch').addEventListener('click', () => {
-    document.body.classList.toggle('dark');
-     switchButton.classList.toggle('active');
- });

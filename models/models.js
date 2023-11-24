@@ -124,7 +124,7 @@ const addToCart = (id, item) => {
         const response = fs.readFileSync(`data/user_cart/${id}.json`);
         if (response != null && response != undefined) {
             const cart = JSON.parse(response);
-            const index = cart.articles.findIndex(item => item.id == item.id);
+            const index = cart.articles.findIndex(cartItem => cartItem.id == item.id);
             if (index != -1) {
                 cart.articles[index].count += item.count;
             } else {
@@ -145,9 +145,10 @@ const addToCart = (id, item) => {
 
 const removeFromCart = (id, id_item) => {
     try {
-        const response = fs.readFileSync(`data/sell/publish.json`);
+        const response = fs.readFileSync(`data/user_cart/${id}.json`);
         if (response != null && response != undefined) {
             const cart = JSON.parse(response);
+            console.log(cart);
             const index = cart.articles.findIndex(item => item.id == id_item);
             if (index != -1) {
                 cart.articles.splice(index, 1);

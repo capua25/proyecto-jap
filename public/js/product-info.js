@@ -14,14 +14,14 @@ dm.addEventListener('click', () => {
 });
 
 async function getData() {
-    const response = await fetch(PRODUCT_INFO_URL + ProdID + '.json');
+    const response = await fetch(PRODUCT_INFO_URL + ProdID);
     const data = await response.json();
     article = data;
     showInfo(data);
 }
 
 async function getComments() {
-    const response = await fetch(PRODUCT_INFO_COMMENTS_URL + ProdID + '.json');
+    const response = await fetch(PRODUCT_INFO_COMMENTS_URL + ProdID);
     const data = await response.json();
     arrComments = data;
     showComments(arrComments);
@@ -80,7 +80,7 @@ function showInfo(articulo) {
         </div>`};
     relacionados.firstElementChild.setAttribute('class', 'carousel-item card-body active');
 }
-function cart() {
+async function cart() {
     let object = {
         count: 1,
         currency: article.currency,
@@ -89,33 +89,22 @@ function cart() {
         name: article.name,
         unitCost: article.cost
     }
-    let cart = localStorage.getItem('cart');
-    if (cart != undefined && cart != null && cart != '') {
-        let actualCart = cart.split(';');
-        if (actualCart.length > 0) {
-            let found = false;
-            cart = '';
-            actualCart.forEach((element) => {
-                let actual = JSON.parse(element);
-                if (actual.id == object.id) {
-                    actual.count++;
-                    found = true;
-                }
-                if (cart == '') {
-                    cart = JSON.stringify(actual);
-                } else {
-                    cart += ';' + JSON.stringify(actual);
-                }
-            });
-            if (!found) { cart += ';' + JSON.stringify(object); }
-        }
+    const response = await fetch(CART_INFO_URL + sessionStorage.getItem('user_id'), {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            "access-token": sessionStorage.getItem('token')
+        },
+        body: JSON.stringify(object)
+    });
+    if (response.ok) {
+        window.location = "cart.html";
     } else {
-        cart = JSON.stringify(object);
+        alert('Error al agregar el producto al carrito');
     }
-    localStorage.setItem('cart', cart);
-    window.location = "cart.html";
 }
 function setProdID(id) {
+    localStorage.removeItem("ProdID", id);
     localStorage.setItem("ProdID", id);
     window.location = "product-info.html";
 }

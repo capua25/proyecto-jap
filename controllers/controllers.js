@@ -5,7 +5,6 @@ const KEY = 'secretkeyjapg279sg1';
 const login = async (req, res) => {
     const log = await models.login(req.body.username, req.body.password);
     const response = await JSON.parse(log);
-    console.log(response);
     if (response){
         if (req.body.username !== response.username || req.body.password !== response.password){
             if(req.body.username != response.username){

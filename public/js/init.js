@@ -42,14 +42,23 @@ let getJSONData = function(url){
 
 //chequeo de login----------------------------------
 document.addEventListener('DOMContentLoaded', function () {
+  const userID = localStorage.getItem('user_id');
+  if (userID == null) {
+      userID = sessionStorage.getItem('user_id');
+      if (userID == null) {
+          window.location = "login.html";
+      }
+  }
   let recordado = false;
   let usuarioguardado = localStorage.getItem('usuario');
-  let passwordguardada = localStorage.getItem('password');
-  if (usuarioguardado != null && passwordguardada != null) {
+  let tokenguardado = localStorage.getItem('token');
+  if (usuarioguardado != null && tokenguardado != null) {
+      sessionStorage.setItem('usuario', usuarioguardado);
+      sessionStorage.setItem('token', tokenguardado);
       recordado = true;
   }
   if (!recordado) {
-      if (sessionStorage.getItem('usuario') == null && sessionStorage.getItem('password') == null) {
+      if (sessionStorage.getItem('usuario') == null && sessionStorage.getItem('token') == null) {
           window.location = "login.html";
       }
   }
@@ -57,9 +66,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   document.getElementById('close-session').addEventListener("click", function () {
       localStorage.removeItem('usuario');
-      localStorage.removeItem('password');
+      localStorage.removeItem('token');
       sessionStorage.removeItem('usuario');
-      sessionStorage.removeItem('password');
+      sessionStorage.removeItem('token');
   });
 });
 //--------------------------------------------------

@@ -1,6 +1,13 @@
 let m_noche = localStorage.getItem('dm');
 const dm = document.getElementById('switch');
 let localStrg = localStorage.getItem('cart');
+const userID = localStorage.getItem('user_id');
+if (userID == null) {
+    userID = sessionStorage.getItem('user_id');
+    if (userID == null) {
+        window.location = "login.html";
+    }
+}
 let cart = [];
 
 dm.addEventListener('click', () => {
@@ -14,42 +21,19 @@ dm.addEventListener('click', () => {
 
 //fetch
 async function getData() {
-    const response = await fetch(CART_INFO_URL + "25801" + ".json");
+    const response = await fetch(CART_INFO_URL + userID, {
+        method: 'GET',
+        headers: {
+            "access-token": sessionStorage.getItem('token')
+        }
+    });
     const data = await response.json();
     data.articles.forEach((element) => {
         cart.push(element);
     });
-    if (localStrg) {
-        let localCart = localStrg.split(';');
-        if (localCart.length > 0 && localCart[0] != "") {
-            localCart.forEach((element) => {
-                cart.push(JSON.parse(element));
-            });
-        }
-    }
-    let newCart = "";
-    cart.forEach((element, index) => {
-        if (newCart == "") {
-            newCart += JSON.stringify(element);
-        } else {
-            newCart += ";" + JSON.stringify(element);
-        }
-    });
-    console.log(newCart);
-    localStorage.setItem("cart", newCart);
     showInfo(cart);
 }
-if (!(localStrg != null && localStrg != undefined)) {
-    getData();
-} else {
-    let localCart = localStrg.split(';');
-    if (localCart.length > 0 && localCart[0] != "") {
-        localCart.forEach((element) => {
-            cart.push(JSON.parse(element));
-        });
-    }
-    showInfo(cart);
-}
+getData()
 //-----
 
 //Mostrar carrito
@@ -66,7 +50,7 @@ function showInfo(array) {
                 value = Math.round(element.unitCost / 40);
             }
             container.innerHTML += `
-                <tr class="table-primary">
+                <tr class="table-primary" id="${element.id}">
                     <th scope="row"><img src="${element.image}" height="100px" alt=""></th>
                     <td class="text-center">${element.name}</td>
                     <td class="text-center price">${element.currency}${element.unitCost}</td>
@@ -76,19 +60,8 @@ function showInfo(array) {
                 </tr>`
         });
         const inputs = document.querySelectorAll('input.subtotal');
-        const subt = document.querySelectorAll('td.fw-bold.text-center');
-        const prices = document.querySelectorAll('td.text-center.price');
-        inputs.forEach((element, i) => {
-            element.addEventListener('input', () => {
-                if (element.value < 0 || element.value > 99) {
-                    element.value = 1;
-                }
-                if (prices[i].textContent.substring(0, 3) == 'UYU') {
-                    subt[i].innerHTML = 'USD' + Math.round(element.value * (Number(prices[i].textContent.substring(3) / 40)));
-                }
-                else if (prices[i].textContent.substring(0, 3) == 'USD') {
-                    subt[i].innerHTML = 'USD' + Math.round(element.value * Number(prices[i].textContent.substring(3)));
-                }
+        inputs.forEach((element) => {
+            element.addEventListener('change', () => {
                 Subtotal();
             });
         });
@@ -98,11 +71,26 @@ function showInfo(array) {
 //---------------
 
 //Actualiza subtotales
-function Subtotal() {
+async function Subtotal() {
+    const inputs = document.querySelectorAll('input.subtotal');
+    const prices = document.querySelectorAll('td.text-center.price');
+    const subt = document.querySelectorAll('#carritoCompras .table-primary td.fw-bold.text-center');
+
+    inputs.forEach((element, i) => {
+        if (element.value < 0 || element.value > 99) {
+            element.value = 1;
+        }
+        if (prices[i].textContent.substring(0, 3) == 'UYU') {
+            subt[i].innerHTML = 'USD' + Math.round(element.value * (Number(prices[i].textContent.substring(3) / 40)));
+        }
+        else if (prices[i].textContent.substring(0, 3) == 'USD') {
+            subt[i].innerHTML = 'USD' + Math.round(element.value * Number(prices[i].textContent.substring(3)));
+        }
+    });
+
     const subtotalProd = document.getElementById('subtotalProd');
     const shipping = document.getElementById('shipping');
     const total = document.getElementById('total');
-    const prices = document.querySelectorAll('#carritoCompras .table-primary td.fw-bold.text-center');
     let totalValue = 0;
     let shippingValue = 0;
 
@@ -138,27 +126,20 @@ function Subtotal() {
 //--------------------
 
 //eliminar del carrito
-function removeFromCart(id) {
-    let localCart = "";
-    let toRemove = 0;
-    cart.forEach((element, index) => {
-        if (element.id == id) {
-            toRemove = index;
-        } else {
-            if (localCart == "") {
-                localCart += JSON.stringify(element);
-            } else {
-                localCart += ";" + JSON.stringify(element);
-            }
-        }
+async function removeFromCart(id) {
+    const response = await fetch(CART_INFO_URL + userID, {
+        method: 'DELETE',
+        headers: {
+            "Content-Type": "application/json",
+            "access-token": sessionStorage.getItem('token')
+        },
+        body: JSON.stringify({ id: id })
     });
-    if (toRemove >= 0) {
-        cart.splice(toRemove, 1)
+    if (response.ok) {
+        getData();
+    } else {
+        alert('Error al eliminar el producto del carrito');
     }
-    localStorage.removeItem("cart");
-    localStorage.setItem("cart", localCart);
-
-    showInfo(cart);
 }
 //--------------------
 
