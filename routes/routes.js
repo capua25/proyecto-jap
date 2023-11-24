@@ -41,22 +41,9 @@ router.post('/user_cart/:id', controllers.addToCart);
 router.delete('/user_cart/:id', controllers.removeFromCart);
 
 //cart buy
-router.use('/cart', (req, res, next) => {
-    const token = req.headers['access-token'];
-    if (token){
-        jwt.verify(token, KEY, (err, decoded) => {
-            if (err){
-                return res.json({message: 'Token inválido'});
-            }else{
-                next();
-            }
-        });
-    }else{
-        res.send({
-            message: 'Token no encontrado'
-        });
-    }
-});
-router.get('/cart', controllers.getCartBuy);
+router.get('/cart/buy', controllers.getCartBuy);
+
+//sell
+router.get('/sell', controllers.publish);
 
 module.exports = router;

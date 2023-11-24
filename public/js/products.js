@@ -1,5 +1,5 @@
 let categoria = localStorage.getItem('catID');
-const URL = `https://japceibal.github.io/emercado-api/cats_products/${categoria}.json`;
+const URL = PRODUCTS_URL+`${categoria}`;
 let listaOrigen = [];
 
 let m_noche = localStorage.getItem('dm');

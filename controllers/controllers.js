@@ -95,6 +95,15 @@ const removeFromCart = (req, res) => {
     }
 }
 
+const publish = (req, res) => {
+    const response = models.publish();
+    if (response){
+        res.status(200).json(response);
+    }else{
+        res.status(500).json({error: 'Error interno'});
+    }
+}
+
 module.exports = {
     login,
     getCategories,
@@ -104,5 +113,6 @@ module.exports = {
     getCartInfo,
     getCartBuy,
     addToCart,
-    removeFromCart
+    removeFromCart,
+    publish
 }

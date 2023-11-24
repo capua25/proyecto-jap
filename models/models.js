@@ -143,19 +143,30 @@ const addToCart = (id, item) => {
     }
 }
 
-const removeFromCart = (id, item_id) => {
+const removeFromCart = (id, id_item) => {
     try {
-        const response = fs.readFileSync(`data/user_cart/${id}.json`);
+        const response = fs.readFileSync(`data/sell/publish.json`);
         if (response != null && response != undefined) {
             const cart = JSON.parse(response);
-            const index = cart.articles.findIndex(item => item.id == item_id);
+            const index = cart.articles.findIndex(item => item.id == id_item);
             if (index != -1) {
                 cart.articles.splice(index, 1);
-                fs.writeFileSync(`data/user_cart/${id}.json`, JSON.stringify(cart));
-                return cart;
-            } else {
-                return null;
             }
+            fs.writeFileSync(`data/user_cart/${id}.json`, JSON.stringify(cart));
+            return cart;
+        } else {
+            return null;
+        }
+    } catch (err) {
+        return null;
+    }
+}
+
+const publish = () => {
+    try {
+        const response = fs.readFileSync(`data/sell/publish.json`);
+        if (response != null && response != undefined) {
+            return response;
         } else {
             return null;
         }
@@ -173,5 +184,6 @@ module.exports = {
     getCartInfo,
     getCartBuy,
     addToCart,
-    removeFromCart
+    removeFromCart,
+    publish
 }
