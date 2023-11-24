@@ -1,4 +1,4 @@
-APLICACION EMERCADO JAP 279 SUBGRUPO 1
+APLICACION WEB E-COMMERCE JAP 279 SUBGRUPO 1
 
 Para implementar esta aplicación se debe ejecutar el comando "npm install" para instalar dependencias y "npm run start" para iniciar el servidor.
 
