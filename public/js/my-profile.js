@@ -10,7 +10,7 @@ dm.addEventListener('click', () => {
 });
 
 //------------------------
-document.getElementById("email").value = sessionStorage.getItem('usuario');
+document.getElementById("email").value = sessionStorage.getItem('email');
 document.getElementById("firstName").value = sessionStorage.getItem('firstName');
 document.getElementById("secondName").value = sessionStorage.getItem('secondName');
 document.getElementById("firstLastName").value = sessionStorage.getItem('firstLastName');
